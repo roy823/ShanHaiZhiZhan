@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "G:/Qt/6.8.3/llvm-mingw_64/include/**",
+                "G:/Qt/6.8.3/llvm-mingw_64/include/QtCore",
+                "G:/Qt/6.8.3/llvm-mingw_64/include/QtGui",
+                "G:/Qt/6.8.3/llvm-mingw_64/include/QtWidgets"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.22631.0",
+            "compilerPath": "G:/Qt/Tools/llvm-mingw1706_64/bin/clang++.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-clang-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

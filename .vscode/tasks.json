@@ -1,0 +1,54 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "makedir",
+            "type": "shell",
+            "command": "if (!(Test-Path build)) { New-Item -ItemType Directory -Path build }",
+            "group": "build"
+        },
+        {
+            "label": "qmake",
+            "type": "shell",
+            "command": "cd build; G:/Qt/6.8.3/llvm-mingw_64/bin/qmake.exe ../GameStart.pro",
+            "group": "build",
+            "dependsOn": [
+                "makedir"
+            ]
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "cd build; G:/Qt/Tools/llvm-mingw1706_64/bin/mingw32-make.exe",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "qmake"
+            ],
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "cd build; G:/Qt/Tools/llvm-mingw1706_64/bin/mingw32-make.exe clean",
+            "group": "build",
+            "dependsOn": [
+                "qmake"
+            ]
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "cd build; ./release/GameStart.exe",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "build"
+            ]
+        }
+    ]
+}

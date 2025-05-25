@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\mocs_compilation_Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\core\creature.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\core\ability.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\core\type.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\core\gameengine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\core\savesystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\battle\battlesystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\battle\skill.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\battle\effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\ui\mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\ui\battlescene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\ui\preparescene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\ui\loadgamedialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\src\ui\savegamedialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\F4FAE6NH3Q_Debug\qrc_resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\mocs_compilation_Release.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\F4FAE6NH3Q_Release\qrc_resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\mocs_compilation_MinSizeRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\F4FAE6NH3Q_MinSizeRel\qrc_resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\mocs_compilation_RelWithDebInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\F4FAE6NH3Q_RelWithDebInfo\qrc_resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\core\creature.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\core\ability.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\core\type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\core\gameengine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\core\savesystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\battle\battlesystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\battle\skill.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\battle\effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\ui\mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\ui\battlescene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\ui\preparescene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\ui\loadgamedialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\src\ui\savegamedialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_Debug\src\ui\ui_mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_Debug\src\ui\ui_battlescene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_Debug\src\ui\ui_preparescene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_Release\src\ui\ui_mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_Release\src\ui\ui_battlescene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_Release\src\ui\ui_preparescene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_MinSizeRel\src\ui\ui_mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_MinSizeRel\src\ui\ui_battlescene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_MinSizeRel\src\ui\ui_preparescene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_RelWithDebInfo\src\ui\ui_mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_RelWithDebInfo\src\ui\ui_battlescene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\include_RelWithDebInfo\src\ui\ui_preparescene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\CMakeFiles\cd7f82a9b53d44b16840e2d5b5ad8537\autouic_(CONFIG).stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\CMakeFiles\c844d07448f7d8aa0f15f167f590947e\qrc_resources.cpp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++_code\ShanHaiZhiZhan\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\C++_code\ShanHaiZhiZhan\src\ui\mainwindow.ui" />
+    <None Include="D:\C++_code\ShanHaiZhiZhan\src\ui\battlescene.ui" />
+    <None Include="D:\C++_code\ShanHaiZhiZhan\src\ui\preparescene.ui" />
+    <None Include="D:\C++_code\ShanHaiZhiZhan\src\resources\resources.qrc" />
+    <None Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\autouic_Debug.stamp" />
+    <None Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\autouic_Release.stamp" />
+    <None Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\autouic_MinSizeRel.stamp" />
+    <None Include="D:\C++_code\ShanHaiZhiZhan\build_cmake\ShanHaiZhiZhan_autogen\autouic_RelWithDebInfo.stamp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{D1570A4A-9B9F-31E2-B70A-966B5A4535B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{D397F34C-49F9-3897-8290-5591339A633F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{70425BE5-B062-3F67-AA86-361EA61953FB}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

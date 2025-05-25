@@ -1,0 +1,36 @@
+^D:\C++_CODE\SHANHAIZHIZHAN\BUILD_CMAKE\CMAKEFILES\CD7F82A9B53D44B16840E2D5B5AD8537\AUTOUIC_(CONFIG).STAMP.RULE
+setlocal
+cd D:\C++_code\ShanHaiZhiZhan\build_cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^D:\C++_CODE\SHANHAIZHIZHAN\BUILD_CMAKE\CMAKEFILES\C844D07448F7D8AA0F15F167F590947E\QRC_RESOURCES.CPP.RULE
+setlocal
+cd D:\C++_code\ShanHaiZhiZhan\build_cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_autorcc D:/C++_code/ShanHaiZhiZhan/build_cmake/CMakeFiles/ShanHaiZhiZhan_autogen.dir/AutoRcc_resources_F4FAE6NH3Q_Info.json Debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^D:\C++_CODE\SHANHAIZHIZHAN\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/C++_code/ShanHaiZhiZhan -BD:/C++_code/ShanHaiZhiZhan/build_cmake --check-stamp-file D:/C++_code/ShanHaiZhiZhan/build_cmake/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

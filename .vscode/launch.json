@@ -1,0 +1,42 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Qt Release",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/release/GameStart.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build",
+            "environment": [
+                {
+                    "name": "PATH",
+                    "value": "G:/Qt/6.8.3/llvm-mingw_64/bin;${env:PATH}"
+                }
+            ],
+            "externalConsole": true,
+            "MIMode": "lldb",
+            "miDebuggerPath": "G:/Qt/Tools/llvm-mingw1706_64/bin/lldb.exe",
+            "preLaunchTask": "build"
+        },
+        {
+            "name": "Qt Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/debug/GameStart.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build",
+            "environment": [
+                {
+                    "name": "PATH",
+                    "value": "G:/Qt/6.8.3/llvm-mingw_64/bin;${env:PATH}"
+                }
+            ],
+            "externalConsole": true,
+            "MIMode": "lldb",
+            "miDebuggerPath": "G:/Qt/Tools/llvm-mingw1706_64/bin/lldb.exe"
+        }
+    ]
+}
