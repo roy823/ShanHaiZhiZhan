@@ -90,6 +90,7 @@
       <AdditionalOptions>%(AdditionalOptions) /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtCore" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include" /external:I "G:/Qt/6.8.3/llvm-mingw_64/mkspecs/win32-clang-g++" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtGui" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtWidgets" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtMultimedia" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtNetwork" /Zc:__cplusplus</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
@@ -157,6 +158,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalOptions>%(AdditionalOptions) /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtCore" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include" /external:I "G:/Qt/6.8.3/llvm-mingw_64/mkspecs/win32-clang-g++" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtGui" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtWidgets" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtMultimedia" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtNetwork" /Zc:__cplusplus</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -225,6 +227,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalOptions>%(AdditionalOptions) /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtCore" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include" /external:I "G:/Qt/6.8.3/llvm-mingw_64/mkspecs/win32-clang-g++" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtGui" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtWidgets" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtMultimedia" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtNetwork" /Zc:__cplusplus</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -293,6 +296,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalOptions>%(AdditionalOptions) /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtCore" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include" /external:I "G:/Qt/6.8.3/llvm-mingw_64/mkspecs/win32-clang-g++" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtGui" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtWidgets" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtMultimedia" /external:I "G:/Qt/6.8.3/llvm-mingw_64/include/QtNetwork" /Zc:__cplusplus</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
