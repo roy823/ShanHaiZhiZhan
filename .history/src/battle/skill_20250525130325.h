@@ -55,8 +55,7 @@ public:
     // 恢复PP
     void restorePP(int amount = 1);
 
-    // 获取最大PP值
-    int getMaxPP() const { return m_maxPP; }
+    
     
     // 添加效果
     void addEffect(Effect* effect);
