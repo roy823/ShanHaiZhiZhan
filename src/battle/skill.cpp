@@ -49,18 +49,6 @@ bool Skill::use(Creature *user, Creature *target, BattleSystem *battle)
         return false;
     }
 
-    // 检查使用者是否有足够的PP (从全局PP池扣除)
-    if (user->getCurrentPP() < m_ppCost)
-    {
-        // battle->addBattleLog(QString("%1 PP不足，无法使用 %2!").arg(user->getName()).arg(m_name));
-        return false; // PP不足，无法使用技能
-    }
-
-    // 消耗PP
-    user->consumePP(m_ppCost);
-    // battle->addBattleLog(QString("%1 消耗了 %2点 PP。").arg(user->getName()).arg(m_ppCost));
-
-
     // 检查技能是否命中 (状态技能可能不需要目标，或者目标是自身)
     if (m_category == SkillCategory::STATUS && !target) { // 对于一些以自身为目标的状态技能
         // battle->addBattleLog(QString("%1 使用了 %2。").arg(user->getName()).arg(m_name));
@@ -251,12 +239,6 @@ bool StatusSkill::use(Creature *user, Creature *target, BattleSystem *battle)
 {
     // 状态技能不造成直接伤害，主要应用效果
     if (!user || !battle) return false;
-
-    if (user->getCurrentPP() < m_ppCost) return false;
-    user->consumePP(m_ppCost);
-    // battle->addBattleLog(QString("%1 消耗了 %2点 PP。").arg(user->getName()).arg(m_ppCost));
-
-
     // 状态技能通常对自己或对方使用，目标可能需要判断
     Creature* actualTarget = target; // 默认目标是传入的target
     // 许多状态技能可能以自身为目标，或需要根据效果判断目标
@@ -342,9 +324,6 @@ bool MultiHitSkill::use(Creature *user, Creature *target, BattleSystem *battle)
 {
     // 中文注释：多段攻击技能使用逻辑
     if (!user || !target || !battle) return false;
-    if (user->getCurrentPP() < m_ppCost) return false;
-
-    user->consumePP(m_ppCost); // 消耗一次PP
 
     int numberOfHits = QRandomGenerator::global()->bounded(m_minHits, m_maxHits + 1);
     bool hitAtLeastOnce = false;
@@ -411,14 +390,6 @@ bool HealingSkill::use(Creature *user, Creature *target, BattleSystem *battle)
 
     if (!user || !healTarget || !battle) return false;
 
-    if (user->getCurrentPP() < m_ppCost) {
-        // battle->addBattleLog(QString("%1 PP不足!").arg(user->getName()));
-        return false;
-    }
-    user->consumePP(m_ppCost);
-    // battle->addBattleLog(QString("%1 使用了 %2! (消耗 %3 PP)").arg(user->getName()).arg(m_name).arg(m_ppCost));
-
-
     // 治疗技能通常必中，或命中率很高，除非有特殊规则
     if (!checkHit(user, healTarget, battle)) { // 即使是治疗，也可能有命中判定 (例如对混乱的队友使用)
         // battle->addBattleLog(QString("%1 的 %2 未能成功施放!").arg(user->getName()).arg(m_name));
@@ -465,15 +436,6 @@ void StatChangeSkill::addStatChange(StatType stat, int stages, bool targetSelf)
 bool StatChangeSkill::use(Creature *user, Creature *target, BattleSystem *battle)
 {
     if (!user || !battle) return false; // target 可以为nullptr如果所有效果都对自己
-
-    if (user->getCurrentPP() < m_ppCost) {
-        // battle->addBattleLog(QString("%1 PP不足!").arg(user->getName()));
-        return false;
-    }
-    user->consumePP(m_ppCost);
-    // battle->addBattleLog(QString("%1 使用了 %2! (消耗 %3 PP)").arg(user->getName()).arg(m_name).arg(m_ppCost));
-
-
     // 能力变化技能通常需要命中判定，除非是对自身使用且必中
     // 假设目标是传入的target，如果效果是针对自身，则内部会处理
     bool overallHit = true; // 假设对自身的效果总是命中

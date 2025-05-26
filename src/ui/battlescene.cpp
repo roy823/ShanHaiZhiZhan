@@ -505,20 +505,23 @@ void BattleScene::updateSkillButtons()
 {
     if (!m_battleSystem) return;
     Creature *playerCreature = m_battleSystem->getPlayerActiveCreature();
-    if (!playerCreature) { /* disable buttons */ return; }// 如果没有玩家精灵，禁用所有技能按钮
-    for (int i = 0; i < 4; ++i) {
-        if (i < m_skillButtons.size() && m_skillButtons[i]) {
-            Skill *skill = nullptr;
-            if (i < playerCreature->getSkillCount()){ skill = playerCreature->getSkill(i); }
-            m_skillButtons[i]->setSkill(skill, playerCreature); // 修正：传入精灵
+    if (!playerCreature) { 
+        // 如果没有玩家精灵，禁用所有技能按钮
+        for (int i = 0; i < 4; ++i) {
+            if (i < m_skillButtons.size() && m_skillButtons[i]) {
+                m_skillButtons[i]->setSkill(nullptr, nullptr);
+            }
         }
-    }
-    if(m_fifthSkillButton) {
+        if(m_fifthSkillButton) {
             m_fifthSkillButton->setText("第五技能\n--");
             m_fifthSkillButton->setEnabled(false);
+        }
+        if(m_restorePPButton) {
+            m_restorePPButton->setEnabled(false);
+        }
+        return;
     }
-    if(m_restorePPButton) {m_restorePPButton->setEnabled(false);
-        return;}
+
     // 更新4个普通技能按钮
     for (int i = 0; i < 4; ++i)
     {
