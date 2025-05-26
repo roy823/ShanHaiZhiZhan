@@ -68,6 +68,14 @@ bool BattleSystem::isPvPBattle() const
     return m_isPvP;
 }
 
+void BattleSystem::playerActionTaken() {
+    // TODO: 实现玩家行动逻辑
+}
+
+void BattleSystem::decideAIActionAndProcess() {
+    // TODO: 实现AI行动逻辑
+}
+
 Creature *BattleSystem::getPlayerActiveCreature() const
 {
     if (m_playerActiveIndex >= 0 && m_playerActiveIndex < m_playerTeam.size())

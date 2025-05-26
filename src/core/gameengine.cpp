@@ -6,6 +6,10 @@
 // 静态实例初始化
 GameEngine *GameEngine::s_instance = nullptr;
 
+QVector<Creature*> GameEngine::getAllCreatureTemplates() const {
+    return m_creatureTemplates.values();
+}
+
 GameEngine *GameEngine::getInstance()
 {
     if (!s_instance)

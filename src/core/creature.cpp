@@ -1,10 +1,11 @@
 // src/core/creature.cpp
 #include "creature.h"
 #include "../battle/battlesystem.h" // 战斗系统，主要用于效果函数签名
-#include "../battle/effect.h"     // 效果类，用于创建具体效果实例
-#include <QRandomGenerator>       // Qt随机数
-#include <QDateTime>              // Qt日期时间 (如果需要)
-#include <QtMath>                 // Qt数学函数 (例如 qMax, qMin)
+#include "../battle/effect.h"       // 效果类，用于创建具体效果实例
+#include "../battle/skill.h"        // 技能类，用于技能相关操作
+#include <QRandomGenerator>         // Qt随机数
+#include <QDateTime>                // Qt日期时间 (如果需要)
+#include <QtMath>                   // Qt数学函数 (例如 qMax, qMin)
 
 // --- Creature基类实现 ---
 
@@ -17,11 +18,11 @@ Creature::Creature(const QString &name, const Type &type, int level)
       // m_baseStats 默认构造 (如果需要，可以在这里或之后设置)
       // m_statStages 默认构造 (全为0)
       // m_talent 默认构造 (全为1)
-      m_fifthSkill(nullptr),                // 初始没有第五技能
-      m_currentHP(1),                       // HP相关会在setBaseStats或updateStatsOnLevelUp后正确设置
+      m_fifthSkill(nullptr), // 初始没有第五技能
+      m_currentHP(1),        // HP相关会在setBaseStats或updateStatsOnLevelUp后正确设置
       m_maxHP(1),
-      m_currentPP(8),                       // 初始PP值，根据设计文档设为8
-      m_maxPP(8),                           // 最大PP值，根据设计文档设为8
+      m_currentPP(8),                          // 初始PP值，根据设计文档设为8
+      m_maxPP(8),                              // 最大PP值，根据设计文档设为8
       m_statusCondition(StatusCondition::NONE) // 初始无异常状态
 {
     // 中文注释：精灵基类构造函数
@@ -96,11 +97,11 @@ BaseStats Creature::getCurrentStats() const
 
     // 应用各项能力等级的修正
     // StatType::HP 通常不参与能力等级修正
-    currentStats.modifyStat(StatType::ATTACK,   qRound(m_baseStats.getStat(StatType::ATTACK)   * (StatStages::calculateModifier(StatType::ATTACK,   m_statStages.getStage(StatType::ATTACK))   - 1.0)));
-    currentStats.modifyStat(StatType::DEFENSE,  qRound(m_baseStats.getStat(StatType::DEFENSE)  * (StatStages::calculateModifier(StatType::DEFENSE,  m_statStages.getStage(StatType::DEFENSE))  - 1.0)));
-    currentStats.modifyStat(StatType::SP_ATTACK,qRound(m_baseStats.getStat(StatType::SP_ATTACK)* (StatStages::calculateModifier(StatType::SP_ATTACK,m_statStages.getStage(StatType::SP_ATTACK))- 1.0)));
-    currentStats.modifyStat(StatType::SP_DEFENSE,qRound(m_baseStats.getStat(StatType::SP_DEFENSE)* (StatStages::calculateModifier(StatType::SP_DEFENSE,m_statStages.getStage(StatType::SP_DEFENSE))- 1.0)));
-    currentStats.modifyStat(StatType::SPEED,    qRound(m_baseStats.getStat(StatType::SPEED)    * (StatStages::calculateModifier(StatType::SPEED,    m_statStages.getStage(StatType::SPEED))    - 1.0)));
+    currentStats.modifyStat(StatType::ATTACK, qRound(m_baseStats.getStat(StatType::ATTACK) * (StatStages::calculateModifier(StatType::ATTACK, m_statStages.getStage(StatType::ATTACK)) - 1.0)));
+    currentStats.modifyStat(StatType::DEFENSE, qRound(m_baseStats.getStat(StatType::DEFENSE) * (StatStages::calculateModifier(StatType::DEFENSE, m_statStages.getStage(StatType::DEFENSE)) - 1.0)));
+    currentStats.modifyStat(StatType::SP_ATTACK, qRound(m_baseStats.getStat(StatType::SP_ATTACK) * (StatStages::calculateModifier(StatType::SP_ATTACK, m_statStages.getStage(StatType::SP_ATTACK)) - 1.0)));
+    currentStats.modifyStat(StatType::SP_DEFENSE, qRound(m_baseStats.getStat(StatType::SP_DEFENSE) * (StatStages::calculateModifier(StatType::SP_DEFENSE, m_statStages.getStage(StatType::SP_DEFENSE)) - 1.0)));
+    currentStats.modifyStat(StatType::SPEED, qRound(m_baseStats.getStat(StatType::SPEED) * (StatStages::calculateModifier(StatType::SPEED, m_statStages.getStage(StatType::SPEED)) - 1.0)));
     // 命中和闪避的修正在战斗系统判定时应用，不直接修改属性值
 
     return currentStats;
@@ -131,8 +132,10 @@ void Creature::setBaseStats(const BaseStats &stats)
     // 当基础属性设定后，需要更新最大HP，并确保当前HP不超过最大HP
     m_maxHP = m_baseStats.getStat(StatType::HP);
     m_currentHP = qMin(m_currentHP, m_maxHP); // 如果之前HP高于新的maxHP，则调整
-    if (m_currentHP <= 0 && m_maxHP > 0) m_currentHP = 1; // 如果设置后精灵濒死，至少保留1HP（除非maxHP为0）
-    if (m_maxHP == 0 ) m_currentHP = 0;
+    if (m_currentHP <= 0 && m_maxHP > 0)
+        m_currentHP = 1; // 如果设置后精灵濒死，至少保留1HP（除非maxHP为0）
+    if (m_maxHP == 0)
+        m_currentHP = 0;
 }
 
 // 设置精灵的天赋
@@ -144,10 +147,9 @@ void Creature::setTalent(const Talent &talent)
 // 设置精灵的最大PP值
 void Creature::setMaxPP(int maxPP)
 {
-    m_maxPP = qMax(0, maxPP); // PP值不应为负
+    m_maxPP = qMax(0, maxPP);                 // PP值不应为负
     m_currentPP = qMin(m_currentPP, m_maxPP); // 确保当前PP不超过新的最大PP
 }
-
 
 // 获取当前HP
 int Creature::getCurrentHP() const
@@ -182,7 +184,8 @@ bool Creature::isDead() const
 // 判断精灵当前回合是否能够行动
 bool Creature::canAct() const
 {
-    if (isDead()) return false; // 濒死状态无法行动
+    if (isDead())
+        return false; // 濒死状态无法行动
 
     // 根据异常状态判断
     switch (m_statusCondition)
@@ -196,7 +199,7 @@ bool Creature::canAct() const
     case StatusCondition::FREEZE: // 冻伤/冰冻状态
         // 设计文档：冻伤每回合扣血，但未明确是否无法行动。假设可以行动。
         // 若冰冻无法行动，则: return false;
-        return true; // 假设冻伤仍可行动，仅扣血
+        return true;            // 假设冻伤仍可行动，仅扣血
     case StatusCondition::FEAR: // 害怕状态
         // 设计文档：害怕状态无法行动
         return false;
@@ -220,7 +223,8 @@ void Creature::gainExperience(int exp)
     }
     m_experience += exp;
     // 尝试升级 (可能会连续升级)
-    while(tryLevelUp()) {
+    while (tryLevelUp())
+    {
         // 循环直到不再满足升级条件
     }
 }
@@ -228,31 +232,34 @@ void Creature::gainExperience(int exp)
 // 尝试升级 (私有辅助函数)
 bool Creature::tryLevelUp()
 {
-    if (m_level >= MAX_LEVEL) return false; // 已达最高等级
+    if (m_level >= MAX_LEVEL)
+        return false; // 已达最高等级
 
     int expToNext = calculateExperienceToNextLevel(); // 计算到下一级所需经验
-    if (m_experience >= expToNext) // 如果当前经验足够
+    if (m_experience >= expToNext)                    // 如果当前经验足够
     {
-        m_level++;                         // 等级提升
-        m_experience -= expToNext;         //扣除升级所需经验
-        updateStatsOnLevelUp();            // 升级后更新能力值
+        m_level++;                 // 等级提升
+        m_experience -= expToNext; // 扣除升级所需经验
+        updateStatsOnLevelUp();    // 升级后更新能力值
         // battle->addBattleLog(QString("%1 升到了 %2级!").arg(m_name).arg(m_level)); // 日志应由GameEngine或BattleSystem处理
         // TODO: 触发学习新技能的逻辑 (如果达到特定等级可以学新技能)
         return true; // 成功升级
     }
-    return false; //经验不足，未升级
+    return false; // 经验不足，未升级
 }
 
 // 精灵受到伤害
 void Creature::takeDamage(int damage)
 {
-    if (damage < 0) damage = 0; // 伤害不应为负
+    if (damage < 0)
+        damage = 0; // 伤害不应为负
     m_currentHP -= damage;
     if (m_currentHP < 0)
     {
         m_currentHP = 0; // HP不应为负
     }
-    if (isDead()) {
+    if (isDead())
+    {
         // battle->addBattleLog(QString("%1 倒下了!").arg(m_name)); // 日志应由BattleSystem处理
         clearAllTurnEffects(); // 濒死时清除所有回合效果
         resetStatStages();     // 重置能力等级
@@ -263,7 +270,8 @@ void Creature::takeDamage(int damage)
 // 精灵恢复HP
 void Creature::heal(int amount)
 {
-    if (isDead() || amount <= 0) return; // 濒死状态不能恢复，无效治疗量也不处理
+    if (isDead() || amount <= 0)
+        return; // 濒死状态不能恢复，无效治疗量也不处理
     m_currentHP += amount;
     if (m_currentHP > m_maxHP)
     {
@@ -274,7 +282,8 @@ void Creature::heal(int amount)
 // 消耗精灵的全局PP
 void Creature::consumePP(int amount)
 {
-    if (amount < 0) return; // 消耗量不应为负
+    if (amount < 0)
+        return; // 消耗量不应为负
     m_currentPP -= amount;
     if (m_currentPP < 0)
     {
@@ -285,7 +294,8 @@ void Creature::consumePP(int amount)
 // 恢复精灵的全局PP
 void Creature::restorePP(int amount)
 {
-    if (amount < 0) return; // 恢复量不应为负
+    if (amount < 0)
+        return; // 恢复量不应为负
     m_currentPP += amount;
     if (m_currentPP > m_maxPP)
     {
@@ -350,9 +360,11 @@ bool Creature::hasSkill(const QString &skillName) const
 {
     for (const Skill *skill : m_skills)
     {
-        if (skill && skill->getName() == skillName) return true;
+        if (skill && skill->getName() == skillName)
+            return true;
     }
-    if (m_fifthSkill && m_fifthSkill->getName() == skillName) return true;
+    if (m_fifthSkill && m_fifthSkill->getName() == skillName)
+        return true;
     return false;
 }
 
@@ -407,7 +419,8 @@ void Creature::addTurnEffect(TurnBasedEffect *effect)
 // 移除一个特定的回合类效果
 void Creature::removeTurnEffect(TurnBasedEffect *effect)
 {
-    if (m_turnEffects.removeAll(effect) > 0) { // 从列表中移除所有匹配的指针
+    if (m_turnEffects.removeAll(effect) > 0)
+    {                  // 从列表中移除所有匹配的指针
         delete effect; // 释放效果对象内存
     }
 }
@@ -456,7 +469,7 @@ void Creature::onTurnStart()
 
     // 1. 处理回合类效果的开始阶段逻辑
     // 创建一个副本进行迭代，防止在迭代过程中修改m_turnEffects导致问题
-    QVector<TurnBasedEffect*> effectsToProcess = m_turnEffects;
+    QVector<TurnBasedEffect *> effectsToProcess = m_turnEffects;
     for (TurnBasedEffect *effect : effectsToProcess)
     {
         if (effect && effect->isOnTurnStart()) // 如果效果是在回合开始时触发
@@ -471,10 +484,13 @@ void Creature::onTurnStart()
     case StatusCondition::SLEEP:
         // 睡眠状态有几率苏醒，或持续固定回合
         // 此处简化：假设睡眠有25%几率当回合苏醒
-        if (QRandomGenerator::global()->bounded(100) < 25) {
+        if (QRandomGenerator::global()->bounded(100) < 25)
+        {
             // battle->addBattleLog(QString("%1 从睡眠中苏醒了!").arg(m_name));
             clearStatusCondition();
-        } else {
+        }
+        else
+        {
             // battle->addBattleLog(QString("%1 仍在睡眠中...").arg(m_name));
         }
         break;
@@ -482,10 +498,13 @@ void Creature::onTurnStart()
         // 设计文档：冻伤每回合扣血。若冰冻有几率解除，可在此处理。
         // 目前扣血逻辑在onTurnEnd，这里可以处理解除冰冻的判定。
         // 假设有20%几率解除冰冻
-        if (QRandomGenerator::global()->bounded(100) < 20) {
+        if (QRandomGenerator::global()->bounded(100) < 20)
+        {
             // battle->addBattleLog(QString("%1 解除了冰冻状态!").arg(m_name));
             clearStatusCondition();
-        } else {
+        }
+        else
+        {
             // battle->addBattleLog(QString("%1 仍处于冰冻状态...").arg(m_name));
         }
         break;
@@ -541,7 +560,8 @@ void Creature::onTurnEnd()
     case StatusCondition::CONFUSION: // 混乱
         // 设计文档：每回合5%概率扣50体力，攻击技能命中率减少80%
         // 扣体力部分在此处理
-        if (QRandomGenerator::global()->bounded(100) < 5) {
+        if (QRandomGenerator::global()->bounded(100) < 5)
+        {
             takeDamage(50);
             // battle->addBattleLog(QString("%1 因混乱而伤害了自己!").arg(m_name));
         }
@@ -615,9 +635,10 @@ int Creature::calculateSpeed() const
 // 计算指定技能属性对目标精灵的克制倍率
 double Creature::getTypeEffectivenessAgainst(const Creature *target, ElementType skillType) const
 {
-    if (!target) return 1.0; // 如果没有目标，则无克制关系
+    if (!target)
+        return 1.0; // 如果没有目标，则无克制关系
 
-    Type attackerSkillType(skillType); // 攻击技能的属性
+    Type attackerSkillType(skillType);             // 攻击技能的属性
     Type defenderCreatureType = target->getType(); // 防守方精灵的属性
 
     return Type::calculateEffectiveness(attackerSkillType, defenderCreatureType); // 调用Type类的静态方法计算
@@ -632,7 +653,8 @@ bool Creature::hasTypeAdvantage(ElementType skillType) const
 // 计算到下一级所需经验 (私有辅助)
 int Creature::calculateExperienceToNextLevel() const
 {
-    if (m_level >= MAX_LEVEL) return 99999999; // 已满级，返回一个极大值
+    if (m_level >= MAX_LEVEL)
+        return 99999999; // 已满级，返回一个极大值
     // 简单示例公式：(等级^3 * 1.2) - (15 * 等级^2) + (100 * 等级) - 140  (类似宝可梦的中速组)
     // 或更简单的：下一级所需总经验 = (等级+1)^3 * 某个系数
     // 这里使用设计文档中的简单公式：基础经验 * 等级^2 / 100
@@ -650,12 +672,12 @@ void Creature::updateStatsOnLevelUp()
 
     // 重新计算基础属性，这里假设天赋值是每级固定增加的点数
     // 注意：更复杂的成长系统会基于种族值、个体值、努力值和等级计算
-    m_baseStats.setStat(StatType::HP,         m_baseStats.getStat(StatType::HP)        + m_talent.getGrowthRate(StatType::HP));
-    m_baseStats.setStat(StatType::ATTACK,     m_baseStats.getStat(StatType::ATTACK)    + m_talent.getGrowthRate(StatType::ATTACK));
-    m_baseStats.setStat(StatType::DEFENSE,    m_baseStats.getStat(StatType::DEFENSE)   + m_talent.getGrowthRate(StatType::DEFENSE));
-    m_baseStats.setStat(StatType::SP_ATTACK,  m_baseStats.getStat(StatType::SP_ATTACK) + m_talent.getGrowthRate(StatType::SP_ATTACK));
-    m_baseStats.setStat(StatType::SP_DEFENSE, m_baseStats.getStat(StatType::SP_DEFENSE)+ m_talent.getGrowthRate(StatType::SP_DEFENSE));
-    m_baseStats.setStat(StatType::SPEED,      m_baseStats.getStat(StatType::SPEED)     + m_talent.getGrowthRate(StatType::SPEED));
+    m_baseStats.setStat(StatType::HP, m_baseStats.getStat(StatType::HP) + m_talent.getGrowthRate(StatType::HP));
+    m_baseStats.setStat(StatType::ATTACK, m_baseStats.getStat(StatType::ATTACK) + m_talent.getGrowthRate(StatType::ATTACK));
+    m_baseStats.setStat(StatType::DEFENSE, m_baseStats.getStat(StatType::DEFENSE) + m_talent.getGrowthRate(StatType::DEFENSE));
+    m_baseStats.setStat(StatType::SP_ATTACK, m_baseStats.getStat(StatType::SP_ATTACK) + m_talent.getGrowthRate(StatType::SP_ATTACK));
+    m_baseStats.setStat(StatType::SP_DEFENSE, m_baseStats.getStat(StatType::SP_DEFENSE) + m_talent.getGrowthRate(StatType::SP_DEFENSE));
+    m_baseStats.setStat(StatType::SPEED, m_baseStats.getStat(StatType::SPEED) + m_talent.getGrowthRate(StatType::SPEED));
 
     // 更新最大HP，并完全恢复HP和PP
     m_maxHP = m_baseStats.getStat(StatType::HP);
@@ -667,7 +689,7 @@ void Creature::updateStatsOnLevelUp()
 void Creature::setLevel(int newLevel)
 {
     m_level = qBound(1, newLevel, MAX_LEVEL); // 确保等级在有效范围内
-    m_experience = 0; // 通常跳级会重置当前等级的经验
+    m_experience = 0;                         // 通常跳级会重置当前等级的经验
     // TODO: 需要根据新等级重新计算所有基础属性，这比较复杂
     // 简单处理：调用多次updateStatsOnLevelUp或一个基于等级的属性计算公式
     // 为简化，此处不完全重新计算属性，依赖于初始设置或更复杂的属性系统
@@ -676,7 +698,6 @@ void Creature::setLevel(int newLevel)
     m_currentHP = m_maxHP;
     m_currentPP = m_maxPP;
 }
-
 
 // --- 具体精灵类实现 ---
 
@@ -700,11 +721,13 @@ TungTungTung::TungTungTung(int level)
     learnSkill(new MultiHitSkill("三重连打", ElementType::NORMAL, SkillCategory::PHYSICAL, 60, 4, 90, 3, 3)); // 3次60威力
 
     StatusSkill *hardenWoodBody = new StatusSkill("硬化木身", ElementType::NORMAL, 3, 100); // 命中100表示对自己使用通常必中
-    hardenWoodBody->addEffect(new StatChangeEffect(StatType::DEFENSE, 3, true));    // 提升自身物防+3
-    hardenWoodBody->addEffect(new StatChangeEffect(StatType::SP_DEFENSE, 3, true)); // 提升自身特防+3
+    hardenWoodBody->addEffect(new StatChangeEffect(StatType::DEFENSE, 3, true));            // 提升自身物防+3
+    hardenWoodBody->addEffect(new StatChangeEffect(StatType::SP_DEFENSE, 3, true));         // 提升自身特防+3
     // 创建回合治疗效果的 lambda
-    auto healLambda = [](Creature *source, Creature *target_unused, BattleSystem *battle_unused, TurnBasedEffect* self_effect_unused) {
-        if (source) {
+    auto healLambda = [](Creature *source, Creature *target_unused, BattleSystem *battle_unused, TurnBasedEffect *self_effect_unused)
+    {
+        if (source)
+        {
             source->heal(source->getMaxHP() * 30 / 100); // 恢复30%最大生命值
         }
     };
@@ -712,8 +735,8 @@ TungTungTung::TungTungTung(int level)
     learnSkill(hardenWoodBody);
 
     CompositeSkill *armorPierceThrust = new CompositeSkill("破甲直刺", ElementType::NORMAL, SkillCategory::PHYSICAL, 70, 3, 100);
-    armorPierceThrust->setEffectChance(80); // 80%的触发几率
-    armorPierceThrust->addEffect(new StatChangeEffect(StatType::DEFENSE, -2, false)); // false表示对目标
+    armorPierceThrust->setEffectChance(80);                                                      // 80%的触发几率
+    armorPierceThrust->addEffect(new StatChangeEffect(StatType::DEFENSE, -2, false));            // false表示对目标
     armorPierceThrust->addEffect(new ClearEffectsEffect(true, false, false, false, false, 100)); // 清除目标能力提升状态
     learnSkill(armorPierceThrust);
 
@@ -731,7 +754,6 @@ void TungTungTung::onTurnStart() { Creature::onTurnStart(); }
 // 木棍人特殊回合结束逻辑 (如果需要)
 void TungTungTung::onTurnEnd() { Creature::onTurnEnd(); }
 
-
 // BombardinoCrocodillo（鳄鱼轰炸机）构造函数
 BombardinoCrocodillo::BombardinoCrocodillo(int level)
     : Creature("鳄鱼轰炸机", Type(ElementType::FLYING, ElementType::MACHINE), level)
@@ -741,8 +763,8 @@ BombardinoCrocodillo::BombardinoCrocodillo(int level)
     setTalent(Talent(9, 12, 7, 11, 8, 10));
 
     // 钢翼切割
-    CompositeSkill* steelWing = new CompositeSkill("钢翼切割", ElementType::MACHINE, SkillCategory::PHYSICAL, 75, 3, 95);
-    steelWing->setEffectChance(50); // 50%几率
+    CompositeSkill *steelWing = new CompositeSkill("钢翼切割", ElementType::MACHINE, SkillCategory::PHYSICAL, 75, 3, 95);
+    steelWing->setEffectChance(50);                                         // 50%几率
     steelWing->addEffect(new StatChangeEffect(StatType::DEFENSE, 1, true)); // 提升自身物防+1
     learnSkill(steelWing);
 
@@ -750,7 +772,7 @@ BombardinoCrocodillo::BombardinoCrocodillo(int level)
     CompositeSkill *diveBomb = new CompositeSkill("俯冲轰炸", ElementType::FLYING, SkillCategory::PHYSICAL, 120, 4, 90);
     // 使用后下一回合自身无法行动 -> 通过添加一个持续1回合的TIRED状态实现
     diveBomb->addEffect(new StatusConditionEffect(StatusCondition::TIRED, 100)); // 100%对自己施加疲惫
-    diveBomb->getEffects().first()->setTargetSelf(true); // 确保疲惫效果作用于自身
+    diveBomb->getEffects().first()->setTargetSelf(true);                         // 确保疲惫效果作用于自身
     learnSkill(diveBomb);
 
     CompositeSkill *alligatorFang = new CompositeSkill("鳄牙撕咬", ElementType::WATER, SkillCategory::PHYSICAL, 80, 3, 100);
@@ -762,22 +784,23 @@ BombardinoCrocodillo::BombardinoCrocodillo(int level)
 
     // 第五技能: 空域压制
     FifthSkill *airspaceSupremacy = new FifthSkill("空域压制", ElementType::FLYING, SkillCategory::STATUS, 0, 3, 100);
-    auto airspaceLambda = [](Creature *source_unused, Creature *target, BattleSystem *battle_unused, TurnBasedEffect* self_effect_unused) {
-        if (target) {
+    auto airspaceLambda = [](Creature *source_unused, Creature *target, BattleSystem *battle_unused, TurnBasedEffect *self_effect_unused)
+    {
+        if (target)
+        {
             target->modifyStatStage(StatType::SPEED, -1);
         }
         // TODO: 己方全体飞行系和机械系精灵攻击技能威力提升20% (这个需要BattleSystem支持场地效果或临时buff)
     };
     // 这个效果应该施加给对方，持续3回合
-    TurnBasedEffect* debuffEffect = new TurnBasedEffect(3, airspaceLambda, true); // 回合开始时触发
-    debuffEffect->setTargetSelf(false); // 作用于对方
+    TurnBasedEffect *debuffEffect = new TurnBasedEffect(3, airspaceLambda, true); // 回合开始时触发
+    debuffEffect->setTargetSelf(false);                                           // 作用于对方
     debuffEffect->setDescription("空域压制：速度下降");
     airspaceSupremacy->addEffect(debuffEffect);
     setFifthSkill(airspaceSupremacy);
 }
 void BombardinoCrocodillo::onTurnStart() { Creature::onTurnStart(); }
 void BombardinoCrocodillo::onTurnEnd() { Creature::onTurnEnd(); }
-
 
 // TralaleroTralala（耐克鲨鱼）构造函数
 TralaleroTralala::TralaleroTralala(int level)
@@ -807,7 +830,6 @@ TralaleroTralala::TralaleroTralala(int level)
 void TralaleroTralala::onTurnStart() { Creature::onTurnStart(); }
 void TralaleroTralala::onTurnEnd() { Creature::onTurnEnd(); }
 
-
 // LiriliLarila（仙人掌大象）构造函数
 LiriliLarila::LiriliLarila(int level)
     : Creature("仙人掌大象", Type(ElementType::GRASS, ElementType::GROUND), level)
@@ -818,15 +840,17 @@ LiriliLarila::LiriliLarila(int level)
 
     // 寄生种子
     StatusSkill *leechSeed = new StatusSkill("寄生种子", ElementType::GRASS, 2, 90);
-    auto leechSeedLambda = [](Creature *source, Creature *target, BattleSystem *battle_unused, TurnBasedEffect* self_effect_unused) {
-        if (source && target && !target->isDead()) { // 确保目标存活
+    auto leechSeedLambda = [](Creature *source, Creature *target, BattleSystem *battle_unused, TurnBasedEffect *self_effect_unused)
+    {
+        if (source && target && !target->isDead())
+        { // 确保目标存活
             int leechAmount = target->getMaxHP() / 8;
             target->takeDamage(leechAmount);
             source->heal(leechAmount);
             // battle_unused->addBattleLog(QString("%1 从 %2 身上吸取了HP!").arg(source->getName()).arg(target->getName()));
         }
     };
-    TurnBasedEffect* leechEffect = new TurnBasedEffect(999, leechSeedLambda, false); // 持续999回合(代表直到交换)，回合结束触发
+    TurnBasedEffect *leechEffect = new TurnBasedEffect(999, leechSeedLambda, false); // 持续999回合(代表直到交换)，回合结束触发
     leechEffect->setDescription("寄生种子效果");
     leechSeed->addEffect(leechEffect); // 这个效果是施加给对方的
     leechSeed->getEffects().first()->setTargetSelf(false);
@@ -847,14 +871,18 @@ LiriliLarila::LiriliLarila(int level)
 
     // 第五技能: 生命汲取领域
     FifthSkill *lifeSiphonField = new FifthSkill("生命汲取领域", ElementType::GRASS, SkillCategory::STATUS, 0, 4, 100);
-    auto siphonLambda = [](Creature *source, Creature *target_active_opponent, BattleSystem *battle, TurnBasedEffect* self_effect_unused) {
-        if (!battle || !source) return;
+    auto siphonLambda = [](Creature *source, Creature *target_active_opponent, BattleSystem *battle, TurnBasedEffect *self_effect_unused)
+    {
+        if (!battle || !source)
+            return;
         // 对场上所有非草属性精灵造成伤害
         // 这个需要BattleSystem提供获取场上所有精灵的方法，这里简化为只影响当前对手
-        Creature* opponent = battle->getOpponentActiveCreature() == source ? battle->getPlayerActiveCreature() : battle->getOpponentActiveCreature();
-        if (opponent && !opponent->isDead()) {
+        Creature *opponent = battle->getOpponentActiveCreature() == source ? battle->getPlayerActiveCreature() : battle->getOpponentActiveCreature();
+        if (opponent && !opponent->isDead())
+        {
             if (opponent->getType().getPrimaryType() != ElementType::GRASS &&
-                (opponent->getType().getSecondaryType() == ElementType::NONE || opponent->getType().getSecondaryType() != ElementType::GRASS)) {
+                (opponent->getType().getSecondaryType() == ElementType::NONE || opponent->getType().getSecondaryType() != ElementType::GRASS))
+            {
                 opponent->takeDamage(opponent->getMaxHP() / 16);
                 // battle->addBattleLog(QString("%1 因生命汲取领域受到了伤害!").arg(opponent->getName()));
             }
@@ -863,7 +891,7 @@ LiriliLarila::LiriliLarila(int level)
         source->heal(source->getMaxHP() / 8);
         // battle->addBattleLog(QString("%1 通过生命汲取领域恢复了HP!").arg(source->getName()));
     };
-    TurnBasedEffect* siphonEffect = new TurnBasedEffect(3, siphonLambda, false); // 持续3回合，回合结束触发
+    TurnBasedEffect *siphonEffect = new TurnBasedEffect(3, siphonLambda, false); // 持续3回合，回合结束触发
     siphonEffect->setDescription("生命汲取领域激活中");
     lifeSiphonField->addEffect(siphonEffect); // 这个效果是施加给自身的场地类效果
     lifeSiphonField->getEffects().first()->setTargetSelf(true);
@@ -872,79 +900,94 @@ LiriliLarila::LiriliLarila(int level)
 void LiriliLarila::onTurnStart() { Creature::onTurnStart(); }
 void LiriliLarila::onTurnEnd() { Creature::onTurnEnd(); }
 
-
 // ChimpanziniBananini（香蕉绿猩猩）构造函数
+class PrimalShiftSkill : public StatusSkill
+{
+public:
+    PrimalShiftSkill() : StatusSkill("狂化变身", ElementType::NORMAL, 4, 100)
+    {
+    }
+    bool use(Creature *user, Creature *target_unused, BattleSystem *battle_unused) override
+    {
+        // 中文注释：使用狂化变身技能
+        // 调用基类的use进行PP消耗和基础判定 (虽然StatusSkill的use可能很简单)
+        if (!StatusSkill::use(user, target_unused, battle_unused))
+            return false;
+
+        if (ChimpanziniBananini *chimp = dynamic_cast<ChimpanziniBananini *>(user))
+        {
+            chimp->enterBerserkForm(3); // 3回合持续时间
+            // if (battle_unused) battle_unused->addBattleLog(QString("%1 进入了狂暴形态!").arg(user->getName()));
+        }
+        else
+        {
+            // qWarning("PrimalShiftSkill used by a non-ChimpanziniBananini creature!");
+            return false; // 非猩猩不能用
+        }
+        return true;
+    }
+    QString getDescription() const override
+    {
+        return "进入“狂暴形态”：物攻等级+2，速度等级+1，物防等级-1，特防等级-1。此效果持续3回合，结束后恢复原形态和能力等级。";
+    }
+};
+
 ChimpanziniBananini::ChimpanziniBananini(int level)
     : Creature("香蕉绿猩猩", Type(ElementType::GRASS, ElementType::NORMAL), level),
       m_inBerserkForm(false), m_berserkFormDuration(0)
 {
-    // 中文注释：香蕉绿猩猩 特化构造
     setBaseStats(BaseStats(100, 125, 60, 95, 80, 90));
     setTalent(Talent(10, 13, 6, 10, 8, 9));
 
-    // 香蕉猛击: 10%几率恢复自身造成伤害25%的体力 (需BattleSystem配合)
     learnSkill(new PhysicalSkill("香蕉猛击", ElementType::GRASS, 85, 3, 100));
     learnSkill(new PhysicalSkill("巨力冲拳", ElementType::NORMAL, 90, 3, 95));
-
     StatusSkill *jungleFortitude = new StatusSkill("丛林坚壁", ElementType::GRASS, 2, 100);
     jungleFortitude->addEffect(new StatChangeEffect(StatType::DEFENSE, 2, true));
     learnSkill(jungleFortitude);
-
     StatusSkill *primalRoar = new StatusSkill("野性咆哮", ElementType::NORMAL, 2, 100);
     primalRoar->addEffect(new StatChangeEffect(StatType::ATTACK, -1, false));
     primalRoar->addEffect(new StatChangeEffect(StatType::DEFENSE, -1, false));
     learnSkill(primalRoar);
 
-    // 狂化变身 - 核心技能
-    // 实际变身逻辑在 Creature::enterBerserkForm/exitBerserkForm 和 onTurnEnd 中处理
-    // 这个技能本身是触发进入状态的
-    StatusSkill *primalShift = new StatusSkill("狂化变身", ElementType::NORMAL, 4, 100);
-    // 效果：进入狂暴形态，物攻+2，速度+1，物防-1，特防-1，持续3回合
-    // 这个技能在use时应该调用 ChimpanziniBananini::enterBerserkForm
-    // 为此，primalShift技能的use方法可能需要特殊处理或一个回调
-    // 简单起见，这里只添加标记效果，具体变身由Creature类或BattleSystem处理
-    primalShift->addEffect(new Effect(EffectType::GENERIC)); // 仅作标记
-    learnSkill(primalShift);
+    learnSkill(new PrimalShiftSkill()); // 使用自定义的变身技能
 
-
-    // 第五技能: 丛林之王强击
-    // 若自身处于“狂暴形态”，则此技能必定命中且威力提升至150。使用后解除“狂暴形态”。
-    // 这个逻辑需要在BattleSystem或自定义的Skill子类中实现
     FifthSkill *jungleKingStrike = new FifthSkill("丛林之王强击", ElementType::GRASS, SkillCategory::PHYSICAL, 130, 5, 90);
     setFifthSkill(jungleKingStrike);
 }
-
-bool ChimpanziniBananini::isInBerserkForm() const { return m_inBerserkForm; }
-
-void ChimpanziniBananini::enterBerserkForm(int duration) {
-    if (!m_inBerserkForm) {
+// 狂暴形态相关方法
+void ChimpanziniBananini::enterBerserkForm(int duration)
+{
+    if (!m_inBerserkForm)
+    {
         m_inBerserkForm = true;
         m_berserkFormDuration = duration;
-        // 应用能力变化
         modifyStatStage(StatType::ATTACK, 2);
         modifyStatStage(StatType::SPEED, 1);
         modifyStatStage(StatType::DEFENSE, -1);
         modifyStatStage(StatType::SP_DEFENSE, -1);
-        // battle->addBattleLog(QString("%1 进入了狂暴形态!").arg(getName()));
     }
 }
-void ChimpanziniBananini::exitBerserkForm() {
-    if (m_inBerserkForm) {
+void ChimpanziniBananini::exitBerserkForm()
+{
+    if (m_inBerserkForm)
+    {
         m_inBerserkForm = false;
         m_berserkFormDuration = 0;
-        // 恢复能力等级变化 (简单重置所有，或只重置变身期间的)
-        resetStatStages(); // 简化处理：重置所有能力等级
-        // battle->addBattleLog(QString("%1 的狂暴形态结束了。").arg(getName()));
+        resetStatStages(); // 简化：重置所有阶段
     }
 }
-void ChimpanziniBananini::onTurnStart() {
+void ChimpanziniBananini::onTurnStart()
+{
     Creature::onTurnStart();
 }
-void ChimpanziniBananini::onTurnEnd() {
+void ChimpanziniBananini::onTurnEnd()
+{
     Creature::onTurnEnd();
-    if (m_inBerserkForm) {
+    if (m_inBerserkForm)
+    {
         m_berserkFormDuration--;
-        if (m_berserkFormDuration <= 0) {
+        if (m_berserkFormDuration <= 0)
+        {
             exitBerserkForm();
         }
     }
@@ -959,7 +1002,7 @@ Luguanluguanlulushijiandaole::Luguanluguanlulushijiandaole(int level)
     setBaseStats(BaseStats(80, 70, 110, 75, 90, 105));
     setTalent(Talent(8, 7, 12, 8, 10, 11));
 
-    CompositeSkill* temporalRay = new CompositeSkill("时光射线", ElementType::LIGHT, SkillCategory::SPECIAL, 70, 3, 100);
+    CompositeSkill *temporalRay = new CompositeSkill("时光射线", ElementType::LIGHT, SkillCategory::SPECIAL, 70, 3, 100);
     temporalRay->setEffectChance(20);
     temporalRay->addEffect(new StatChangeEffect(StatType::SPEED, -1, false));
     learnSkill(temporalRay);
@@ -977,13 +1020,12 @@ Luguanluguanlulushijiandaole::Luguanluguanlulushijiandaole(int level)
     // 时光跳跃: 先制+3。使自身本回合免疫所有攻击和技能效果。
     // 免疫效果通过TurnBasedEffect标记，由BattleSystem检查
     StatusSkill *timeHop = new StatusSkill("时光跳跃", ElementType::LIGHT, 2, 100, 3); // 优先级3
-    auto immunityLambda = [](Creature* aff, Creature* src, BattleSystem* b, TurnBasedEffect* self_eff){ /* 标记用 */ };
-    TurnBasedEffect* hopImmunity = new TurnBasedEffect(1, immunityLambda, true); // 持续1回合，回合开始生效
+    auto immunityLambda = [](Creature *aff, Creature *src, BattleSystem *b, TurnBasedEffect *self_eff) { /* 标记用 */ };
+    TurnBasedEffect *hopImmunity = new TurnBasedEffect(1, immunityLambda, true); // 持续1回合，回合开始生效
     hopImmunity->setDescription("时光跳跃免疫");
     timeHop->addEffect(hopImmunity);
     timeHop->getEffects().first()->setTargetSelf(true);
     learnSkill(timeHop);
-
 
     // 第五技能: 时间悖论 (极其复杂，简化或标记为TODO)
     FifthSkill *temporalParadox = new FifthSkill("时间悖论", ElementType::NORMAL, SkillCategory::STATUS, 0, 5, 100);
@@ -995,13 +1037,14 @@ Luguanluguanlulushijiandaole::Luguanluguanlulushijiandaole(int level)
 }
 
 void Luguanluguanlulushijiandaole::recordBattleState() { /* TODO */ }
-bool Luguanluguanlulushijiandaole::tryRevertBattleState(BattleSystem* battle_unused) { /* TODO */ return false; }
+bool Luguanluguanlulushijiandaole::tryRevertBattleState(BattleSystem *battle_unused) { /* TODO */ return false; }
 void Luguanluguanlulushijiandaole::onTurnStart() { Creature::onTurnStart(); }
-void Luguanluguanlulushijiandaole::onTurnEnd() {
+void Luguanluguanlulushijiandaole::onTurnEnd()
+{
     Creature::onTurnEnd();
-    if (m_snapshotTurnsLeft > 0) m_snapshotTurnsLeft--;
+    if (m_snapshotTurnsLeft > 0)
+        m_snapshotTurnsLeft--;
 }
-
 
 // CappuccinoAssassino（卡布奇诺忍者）构造函数
 CappuccinoAssassino::CappuccinoAssassino(int level)
@@ -1017,7 +1060,7 @@ CappuccinoAssassino::CappuccinoAssassino(int level)
     // 滚烫奇袭
     CompositeSkill *scaldingSurprise = new CompositeSkill("滚烫奇袭", ElementType::FIRE, SkillCategory::SPECIAL, 70, 3, 100);
     // 30%几率令目标烧伤。若目标速度低于自身，则烧伤几率提升至60%。 (条件几率需BattleSystem支持)
-    scaldingSurprise->setEffectChance(30); // 基础30%
+    scaldingSurprise->setEffectChance(30);                                              // 基础30%
     scaldingSurprise->addEffect(new StatusConditionEffect(StatusCondition::BURN, 100)); // 若触发setEffectChance，则100%烧伤
     learnSkill(scaldingSurprise);
 
@@ -1040,13 +1083,26 @@ CappuccinoAssassino::CappuccinoAssassino(int level)
 bool CappuccinoAssassino::isInShadowState() const { return m_inShadowState; }
 void CappuccinoAssassino::enterShadowState() { m_inShadowState = true; }
 void CappuccinoAssassino::exitShadowState() { m_inShadowState = false; }
-void CappuccinoAssassino::onTurnStart() {
+void CappuccinoAssassino::onTurnStart()
+{
     Creature::onTurnStart();
-    if (m_inShadowState) { /* 影子状态的回合开始效果 */ }
+    if (m_inShadowState)
+    { /* 影子状态的回合开始效果 */
+    }
 }
-void CappuccinoAssassino::onTurnEnd() {
+void CappuccinoAssassino::onTurnEnd()
+{
     Creature::onTurnEnd();
-    if (m_inShadowState) { /* 影子状态的回合结束效果, 例如解除 */
+    if (m_inShadowState)
+    { /* 影子状态的回合结束效果, 例如解除 */
         // exitShadowState();
     }
 }
+
+TungTungTung::~TungTungTung() {}
+BombardinoCrocodillo::~BombardinoCrocodillo() {}
+TralaleroTralala::~TralaleroTralala() {}
+LiriliLarila::~LiriliLarila() {}
+ChimpanziniBananini::~ChimpanziniBananini() {}
+Luguanluguanlulushijiandaole::~Luguanluguanlulushijiandaole() {}
+CappuccinoAssassino::~CappuccinoAssassino() {}

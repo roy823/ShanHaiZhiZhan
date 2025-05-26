@@ -29,7 +29,7 @@ class GameEngine : public QObject {
 
 public:
     static GameEngine* getInstance();
-    
+    QVector<Creature*> getAllCreatureTemplates() const;
     // 初始化和清理
     void init();
     void cleanup();

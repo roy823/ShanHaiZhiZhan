@@ -18,7 +18,7 @@ Skill::Skill(const QString &name, ElementType type, SkillCategory category,
       m_accuracy(accuracy),          // 初始化技能命中率
       m_priority(priority)           // 初始化技能优先级
 {
-    // m_currentPP 和 m_maxPP 已从Skill类中移除，PP管理移至Creature类
+    
 }
 
 // 析构函数
@@ -30,49 +30,14 @@ Skill::~Skill()
     m_effects.clear(); // 清空列表
 }
 
-// 获取技能名称
-QString Skill::getName() const
-{
-    return m_name;
-}
 
-// 获取技能属性
-ElementType Skill::getType() const
-{
-    return m_type;
-}
-
-// 获取技能类别
-SkillCategory Skill::getCategory() const
-{
-    return m_category;
-}
-
-// 获取技能威力
-int Skill::getPower() const
-{
-    // TODO: 某些技能的威力可能会根据特定条件动态变化 (例如：HP越低威力越高)
-    // 可以在派生类中重写此方法以实现动态威力
-    return m_power;
-}
-
-// 获取技能PP消耗
-int Skill::getPPCost() const
-{
-    return m_ppCost;
-}
-
-// 获取技能命中率
-int Skill::getAccuracy() const
-{
-    return m_accuracy;
-}
-
-// 获取技能优先级
-int Skill::getPriority() const
-{
-    return m_priority;
-}
+QString Skill::getName() const { return m_name; }
+ElementType Skill::getType() const { return m_type; }
+SkillCategory Skill::getCategory() const { return m_category; }
+int Skill::getPower() const { return m_power; }
+int Skill::getPPCost() const { return m_ppCost; }
+int Skill::getAccuracy() const { return m_accuracy; }
+int Skill::getPriority() const { return m_priority; }
 
 // 使用技能 (通用逻辑)
 bool Skill::use(Creature *user, Creature *target, BattleSystem *battle)
@@ -100,9 +65,10 @@ bool Skill::use(Creature *user, Creature *target, BattleSystem *battle)
     if (m_category == SkillCategory::STATUS && !target) { // 对于一些以自身为目标的状态技能
         // battle->addBattleLog(QString("%1 使用了 %2。").arg(user->getName()).arg(m_name));
         // 应用效果 (通常作用于自身)
-        for (Effect *effect : m_effects)
-        {
-            if (effect) effect->apply(user, user, battle); // 状态技能效果可能作用于使用者
+        for (Effect *effect : m_effects) {
+            if (effect) {
+                effect->apply(user, target, battle); // Effect 内部自己处理概率
+            }
         }
         return true; // 状态技能命中通常为必中或有独立判定
     }
@@ -370,62 +336,41 @@ MultiHitSkill::MultiHitSkill(const QString &name, ElementType type, SkillCategor
     : Skill(name, type, category, power, ppCost, accuracy, priority),
       m_minHits(qMax(1, minHits)),       // 确保最小攻击次数至少为1
       m_maxHits(qMax(m_minHits, maxHits)) // 确保最大攻击次数不小于最小次数
-{
-}
+{}
 
 bool MultiHitSkill::use(Creature *user, Creature *target, BattleSystem *battle)
 {
+    // 中文注释：多段攻击技能使用逻辑
     if (!user || !target || !battle) return false;
+    if (user->getCurrentPP() < m_ppCost) return false;
 
-    if (user->getCurrentPP() < m_ppCost) {
-        // battle->addBattleLog(QString("%1 PP不足!").arg(user->getName()));
-        return false;
-    }
     user->consumePP(m_ppCost); // 消耗一次PP
-    // battle->addBattleLog(QString("%1 使用了 %2! (消耗 %3 PP)").arg(user->getName()).arg(m_name).arg(m_ppCost));
 
-
-    int numberOfHits = QRandomGenerator::global()->bounded(m_minHits, m_maxHits + 1); // 随机决定攻击次数
+    int numberOfHits = QRandomGenerator::global()->bounded(m_minHits, m_maxHits + 1);
     bool hitAtLeastOnce = false;
-    int totalDamageDealt = 0; // 用于记录总伤害，方便日志
 
-    // battle->addBattleLog(QString("%1 将攻击 %2 次!").arg(m_name).arg(numberOfHits));
-
-    for (int i = 0; i < numberOfHits; ++i)
-    {
-        if (target->isDead()) break; // 如果目标在中途被打败，停止攻击
-
-        if (checkHit(user, target, battle)) // 每次攻击独立计算命中
-        {
+    // BattleSystem 将循环调用 calculateDamage 和 takeDamage numberOfHits 次
+    // Skill::use 只需要表明技能已成功发动（命中至少一次）
+    // 假设只要第一次命中，技能就算发动成功。BattleSystem处理实际的多段命中和伤害。
+    for (int i = 0; i < numberOfHits; ++i) { // 至少检查一次命中
+        if (checkHit(user, target, battle)) {
             hitAtLeastOnce = true;
-            // battle->addBattleLog(QString("第 %1 段攻击命中了!").arg(i + 1));
-
-            // 伤害计算和应用由 BattleSystem 处理，这里仅示意
-            // BattleSystem会调用 skill->calculateDamage() 然后 target->takeDamage()
-            // BattleSystem::processTurn 中应该有逻辑处理多段攻击
-
-            // 应用附加效果 (如果有多段攻击也触发效果的设计)
-            // 这里的效果是技能本身附带的，可能每次命中都判定一次
-            // 或者设计为只有一次判定，或最后一次命中判定
-            // 当前逻辑：如果技能有效果，且每次命中都可能触发
-            if (QRandomGenerator::global()->bounded(100) < m_effectChance) { // 假设CompositeMultiHitSkill有m_effectChance
-                 for (Effect *effect : m_effects) {
-                    if (effect) effect->apply(user, target, battle);
+            // 对于有附加效果的多段攻击，效果如何触发需要明确设计
+            // 示例：每次命中都尝试触发效果
+            for (Effect *effect : m_effects) {
+                if (effect && effect->publicCheckChance()) { // 效果自身也有触发几率
+                    effect->apply(user, target, battle);
                 }
             }
+            if(i==0) break; // 简化：只要命中一次就算成功，BattleSystem处理后续
+        } else {
+            if(i==0) return false; // 第一次未命中则技能失败
+            break; // 一旦失手，后续攻击也停止 (常见规则)
         }
-        else
-        {
-            // battle->addBattleLog(QString("第 %1 段攻击未命中。").arg(i + 1));
-            // 根据游戏规则，一次未命中是否终止后续攻击 (通常是继续完所有判定)
-        }
+        if(target->isDead()) break; // 目标倒下则停止
     }
-
-    // BattleSystem 会在处理这个技能时，循环调用 calculateDamage 和 takeDamage
-    // 此处的返回值表示技能是否至少命中了一次（即PP消耗了且有行动）
     return hitAtLeastOnce;
 }
-
 
 // --- FixedDamageSkill 实现 ---
 FixedDamageSkill::FixedDamageSkill(const QString &name, ElementType type, SkillCategory category,
@@ -492,8 +437,7 @@ bool HealingSkill::use(Creature *user, Creature *target, BattleSystem *battle)
 
     if (actualHealAmount > 0) {
         healTarget->heal(actualHealAmount);
-        // battle->addBattleLog(QString("%1 恢复了 %2点 HP!").arg(healTarget->getName()).arg(actualHealAmount));
-        if(battle) battle->emitHealingReceived(healTarget, actualHealAmount); // 发出治疗信号
+        // BattleSystem 负责 emitHealingReceived
     }
 
     // 应用其他附加效果 (如果有)
@@ -533,10 +477,11 @@ bool StatChangeSkill::use(Creature *user, Creature *target, BattleSystem *battle
     // 能力变化技能通常需要命中判定，除非是对自身使用且必中
     // 假设目标是传入的target，如果效果是针对自身，则内部会处理
     bool overallHit = true; // 假设对自身的效果总是命中
-    if (!m_statChanges.isEmpty() && !m_statChanges.first().targetSelf && target) { // 如果有对敌效果，则检查命中
+    if (!m_statChanges.isEmpty() && !m_statChanges.first().targetSelf && target) {
         overallHit = checkHit(user, target, battle);
+    } else if (m_statChanges.isEmpty() && target) { // 如果没有预设的statChanges，但有其他效果且需要目标
+         overallHit = checkHit(user, target, battle);
     }
-
 
     if (overallHit)
     {
@@ -546,57 +491,37 @@ bool StatChangeSkill::use(Creature *user, Creature *target, BattleSystem *battle
             Creature *actualTarget = change.targetSelf ? user : target;
             if (actualTarget) // 确保目标有效
             {
+                // int oldStage = actualTarget->getStatStages().getStage(change.stat); // oldStage 未使用
                 actualTarget->modifyStatStage(change.stat, change.stages);
-                // battle->addBattleLog(QString("%1 的 %2 %3了 %4 等级。")
-                //                      .arg(actualTarget->getName())
-                //                      .arg(StatStages::getStatName(change.stat)) // 假设有此方法
-                //                      .arg(change.stages > 0 ? "提升" : "降低")
-                //                      .arg(std::abs(change.stages)));
-                 if(battle) battle->emitStatStageChanged(actualTarget, change.stat, actualTarget->getStatStages().getStage(change.stat) - change.stages, actualTarget->getStatStages().getStage(change.stat)); // 发出信号
-            }
+                // int newStage = actualTarget->getStatStages().getStage(change.stat); // newStage 未使用
+                // BattleSystem 负责 emitStatStageChanged            }
         }
 
-        // 应用其他非能力改变的附加效果 (如果有)
-        for (Effect *effect : m_effects)
-        {
+        for (Effect *effect : m_effects) { // 应用其他非能力改变的附加效果
             if (effect) {
-                // 确定效果目标
-                Creature* effectTarget = target; // 默认是传入的目标
-                // TODO: Effect类本身可能需要一个 TargetType (SELF, OPPONENT, ALLY 等) 来决定作用对象
-                effect->apply(user, effectTarget, battle);
+                Creature* effectTarget = effect->isTargetSelf() ? user : target;
+                if (effectTarget) effect->apply(user, effectTarget, battle);
             }
         }
         return true;
     }
-    else
-    {
-        // battle->addBattleLog(QString("%1 的 %2 未能命中!").arg(user->getName()).arg(m_name));
-        return false;
-    }
+    return false; // 如果未命中，返回false
 }
-
+}
 
 // --- FifthSkill 实现 ---
 FifthSkill::FifthSkill(const QString &name, ElementType type, SkillCategory category,
                        int power, int ppCost, int accuracy, int priority)
     : Skill(name, type, category, power, ppCost, accuracy, priority)
 {
-    // 第五技能的特定初始化
+    // 第五技能初始化
 }
 
-// 检查第五技能是否可以使用
-bool FifthSkill::canUse(Creature *user, Creature *target, BattleSystem* battle) const
+bool FifthSkill::canUse(Creature *user, Creature *target_unused, BattleSystem* battle_unused) const
 {
-    if(!user) return false;
-    // 基础检查：PP是否足够 (由Creature::useSkill或BattleSystem在选择时检查)
-    // if (user->getCurrentPP() < m_ppCost) return false;
-
-    // 默认第五技能总能使用，派生类可以重写此方法添加特定条件
-    // 例如："不屈战魂" 需要HP低于1/2
-    if (m_name == "不屈战魂") { // 示例：根据技能名称判断
+    if (!user) return false;
+    if (m_name == "不屈战魂") {
         return user->getCurrentHP() < (user->getMaxHP() / 2);
     }
-    // 其他第五技能的特定条件可以在这里添加或在各自的派生类中重写
-
-    return true; // 默认无特殊条件
+    return true;
 }

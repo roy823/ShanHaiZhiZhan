@@ -414,13 +414,19 @@ bool StatChangeSkill::use(Creature* user, Creature* target, BattleSystem* battle
     return true;
 }
 
-// FifthSkill实现
-FifthSkill::FifthSkill(const QString& name, ElementType type, SkillCategory category, 
-                      int power, int ppCost, int accuracy, int priority)
-    : Skill(name, type, category, power, ppCost, accuracy, priority) {
+// --- FifthSkill 实现 ---
+FifthSkill::FifthSkill(const QString &name, ElementType type, SkillCategory category,
+                       int power, int ppCost, int accuracy, int priority)
+    : Skill(name, type, category, power, ppCost, accuracy, priority)
+{
+    // 第五技能初始化
 }
 
-bool FifthSkill::canUse(Creature* user, Creature* target) const {
-    // 默认实现，可以在子类中重写以添加特殊条件
+bool FifthSkill::canUse(Creature *user, Creature *target_unused, BattleSystem* battle_unused) const
+{
+    if (!user) return false;
+    if (m_name == "不屈战魂") {
+        return user->getCurrentHP() < (user->getMaxHP() / 2);
+    }
     return true;
 }

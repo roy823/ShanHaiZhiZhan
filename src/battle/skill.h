@@ -227,14 +227,9 @@ private:
 class FifthSkill : public Skill
 {
 public:
-    FifthSkill(const QString &name, ElementType type, SkillCategory category,
+    FifthSkill(const QString &name, ElementType type, SkillCategory category, // ElementType is correctly used here as a type
                int power, int ppCost, int accuracy, int priority = 0);
 
-    // 检查此第五技能是否满足使用条件
-    // user: 技能使用者
-    // target: 技能目标 (可能为nullptr)
-    // battle: 当前战斗系统，用于获取战斗状态
-    // 返回值: true如果可以使用，false如果不满足条件
     virtual bool canUse(Creature *user, Creature *target, BattleSystem* battle) const;
 };
 
