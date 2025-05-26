@@ -3,6 +3,7 @@
 #include "../battle/battlesystem.h" // 战斗系统，主要用于效果函数签名
 #include "../battle/effect.h"       // 效果类，用于创建具体效果实例
 #include "../battle/skill.h"        // 技能类，用于技能相关操作
+#include "../battle/specialskills.h" // 特殊技能类，包含第五技能的实现
 #include <QRandomGenerator>         // Qt随机数
 #include <QDateTime>                // Qt日期时间 (如果需要)
 #include <QtMath>                   // Qt数学函数 (例如 qMax, qMin)
@@ -1049,7 +1050,6 @@ void Luguanluguanlulushijiandaole::onTurnEnd()
     if (m_snapshotTurnsLeft > 0)
         m_snapshotTurnsLeft--;
 }
-
 // CappuccinoAssassino（卡布奇诺忍者）构造函数
 CappuccinoAssassino::CappuccinoAssassino(int level)
     : Creature("CappuccinoAssassino", Type(ElementType::SHADOW, ElementType::MACHINE), level),
@@ -1059,8 +1059,7 @@ CappuccinoAssassino::CappuccinoAssassino(int level)
     setBaseStats(BaseStats(70, 115, 80, 65, 70, 130));
     setTalent(Talent(7, 12, 8, 7, 7, 14));
 
-    learnSkill(new MultiHitSkill("影手里剑", ElementType::SHADOW, SkillCategory::PHYSICAL, 25, 2, 100, 2, 3, 1)); // 先制+1, 攻2-3次
-
+    learnSkill(new MultiHitSkill("影手里剑", ElementType::SHADOW, SkillCategory::PHYSICAL, 25, 2, 100, 2, 3, 1));
     // 滚烫奇袭
     CompositeSkill *scaldingSurprise = new CompositeSkill("滚烫奇袭", ElementType::FIRE, SkillCategory::SPECIAL, 70, 3, 100);
     // 30%几率令目标烧伤。若目标速度低于自身，则烧伤几率提升至60%。 (条件几率需BattleSystem支持)
@@ -1080,8 +1079,7 @@ CappuccinoAssassino::CappuccinoAssassino(int level)
     // 第五技能: 绝影刺杀
     // 先制+1。若目标HP高于75%，则此技能威力提升50%；若目标HP低于25%，则此技能必定暴击。
     // (威力提升和必爆条件需BattleSystem或自定义Skill子类支持)
-    FifthSkill *phantomAssassinate = new FifthSkill("绝影刺杀", ElementType::SHADOW, SkillCategory::PHYSICAL, 90, 4, 101, 1); // 101命中=必中, 优先级+1
-    setFifthSkill(phantomAssassinate);
+    setFifthSkill(new PhantomAssassinateSkill());
 }
 
 bool CappuccinoAssassino::isInShadowState() const { return m_inShadowState; }

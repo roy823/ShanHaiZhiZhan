@@ -6,6 +6,7 @@ obj/gameengine.o
 obj/savesystem.o
 obj/battlesystem.o
 obj/skill.o
+obj/specialskills.o
 obj/effect.o
 obj/mainwindow.o
 obj/battlescene.o

@@ -1,4 +1,5 @@
 #include "battlesystem.h"
+#include "specialskills.h"
 #include <algorithm>
 #include <QRandomGenerator>
 
@@ -309,6 +310,13 @@ int BattleSystem::calculateDamage(Creature *attacker, Creature *defender, Skill 
     int damage = 0;
     double typeEffectiveness = 1.0;
     bool isCritical = false;
+
+    // 检查是否是PhantomAssassinateSkill并应强制暴击
+    if (PhantomAssassinateSkill* phantomSkill = dynamic_cast<PhantomAssassinateSkill*>(skill)) {
+        if (phantomSkill->shouldForceCriticalHit(attacker, defender)) {
+            isCritical = true; // 强制暴击
+        }
+    }
 
     // 根据技能类别选择攻击和防御数值
     int attackStat = 0;

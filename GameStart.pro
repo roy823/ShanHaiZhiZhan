@@ -15,6 +15,7 @@ SOURCES += \
     src/core/savesystem.cpp \
     src/battle/battlesystem.cpp \
     src/battle/skill.cpp \
+    src/battle/specialskills.cpp \
     src/battle/effect.cpp \
     src/ui/mainwindow.cpp \
     src/ui/battlescene.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     src/core/savesystem.h \
     src/battle/battlesystem.h \
     src/battle/skill.h \
+    src/battle/specialskills.h \
     src/battle/effect.h \
     src/ui/mainwindow.h \
     src/ui/battlescene.h \
