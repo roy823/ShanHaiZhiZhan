@@ -272,7 +272,9 @@ bool BattleSystem::checkBattleEnd() {
         }
     }
     
+    // 根据情况确定战斗结果
     BattleResult newResultState = BattleResult::ONGOING;
+    
     if (playerAllFainted && opponentAllFainted) {
         newResultState = BattleResult::DRAW;
     } else if (playerAllFainted) {
@@ -280,15 +282,16 @@ bool BattleSystem::checkBattleEnd() {
     } else if (opponentAllFainted) {
         newResultState = BattleResult::PLAYER_WIN;
     }
-
-    // 如果战斗结果从“进行中”变为其他状态，则更新 m_battleResult
+    
+    // 如果战斗结果从"进行中"变为其他状态，则更新m_battleResult并发出信号
     if (newResultState != BattleResult::ONGOING) {
         m_battleResult = newResultState;
-        return true; // 表示战斗刚刚结束或已结束
+        emit battleEnded(m_battleResult);
+        return true;
     }
-    return false; // 战斗仍在进行
+    
+    return false;
 }
-
 
 QVector<BattleLogEntry> BattleSystem::getBattleLog() const
 {
