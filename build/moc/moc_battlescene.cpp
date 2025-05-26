@@ -60,6 +60,8 @@ static constexpr auto qt_meta_stringdata_ZN11BattleSceneE = QtMocHelpers::string
     "oldCreature",
     "newCreature",
     "isPlayer",
+    "onPlayerActionConfirmed",
+    "onOpponentActionConfirmed",
     "onFifthSkillButtonClicked",
     "onRestorePPButtonClicked"
 );
@@ -73,7 +75,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11BattleSceneE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -81,17 +83,19 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11BattleSceneE[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   80,    2, 0x08,    1 /* Private */,
-       4,    0,   83,    2, 0x08,    3 /* Private */,
-       5,    0,   84,    2, 0x08,    4 /* Private */,
-       6,    1,   85,    2, 0x08,    5 /* Private */,
-       8,    2,   88,    2, 0x08,    7 /* Private */,
-      11,    1,   93,    2, 0x08,   10 /* Private */,
-      12,    2,   96,    2, 0x08,   12 /* Private */,
-      16,    2,  101,    2, 0x08,   15 /* Private */,
-      18,    3,  106,    2, 0x08,   18 /* Private */,
-      22,    0,  113,    2, 0x08,   22 /* Private */,
-      23,    0,  114,    2, 0x08,   23 /* Private */,
+       1,    1,   92,    2, 0x08,    1 /* Private */,
+       4,    0,   95,    2, 0x08,    3 /* Private */,
+       5,    0,   96,    2, 0x08,    4 /* Private */,
+       6,    1,   97,    2, 0x08,    5 /* Private */,
+       8,    2,  100,    2, 0x08,    7 /* Private */,
+      11,    1,  105,    2, 0x08,   10 /* Private */,
+      12,    2,  108,    2, 0x08,   12 /* Private */,
+      16,    2,  113,    2, 0x08,   15 /* Private */,
+      18,    3,  118,    2, 0x08,   18 /* Private */,
+      22,    0,  125,    2, 0x08,   22 /* Private */,
+      23,    0,  126,    2, 0x08,   23 /* Private */,
+      24,    0,  127,    2, 0x08,   24 /* Private */,
+      25,    0,  128,    2, 0x08,   25 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -103,6 +107,8 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11BattleSceneE[] = {
     QMetaType::Void, 0x80000000 | 13, QMetaType::Int,   14,   15,
     QMetaType::Void, 0x80000000 | 13, QMetaType::Int,   14,   17,
     QMetaType::Void, 0x80000000 | 13, 0x80000000 | 13, QMetaType::Bool,   19,   20,   21,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -148,6 +154,10 @@ Q_CONSTINIT const QMetaObject BattleScene::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<Creature *, std::false_type>,
         QtPrivate::TypeAndForceComplete<Creature *, std::false_type>,
         QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'onPlayerActionConfirmed'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onOpponentActionConfirmed'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onFifthSkillButtonClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onRestorePPButtonClicked'
@@ -170,8 +180,10 @@ void BattleScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 6: _t->onDamageCaused((*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         case 7: _t->onHealingReceived((*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         case 8: _t->onCreatureSwitched((*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
-        case 9: _t->onFifthSkillButtonClicked(); break;
-        case 10: _t->onRestorePPButtonClicked(); break;
+        case 9: _t->onPlayerActionConfirmed(); break;
+        case 10: _t->onOpponentActionConfirmed(); break;
+        case 11: _t->onFifthSkillButtonClicked(); break;
+        case 12: _t->onRestorePPButtonClicked(); break;
         default: ;
         }
     }
@@ -196,14 +208,14 @@ int BattleScene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 13;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 13)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 11;
+        _id -= 13;
     }
     return _id;
 }

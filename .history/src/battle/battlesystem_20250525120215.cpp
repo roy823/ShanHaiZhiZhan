@@ -87,20 +87,25 @@ bool BattleSystem::executeAction(BattleAction action, int param1, int param2) {
     // 根据当前是谁的回合来队列相应的动作
     if (m_playerTurn) {
         queuePlayerAction(action, param1, param2);
-    } else if (!m_isPvP) {
-        // 如果不是PvP，则AI控制对手
-        decideAIAction();
+        m_playerActionReady = true;
     } else {
-        // PvP模式下的对手回合
         queueOpponentAction(action, param1, param2);
+        m_opponentActionReady = true;
     }
-    
-    // 如果双方都已选择动作，处理回合
-    if (!m_actionQueue.isEmpty()) {
+
+    // 如果是PvE且AI还没行动，则让AI行动
+    if (!m_isPvP && !m_opponentActionReady) {
+        decideAIAction();
+        m_opponentActionReady = true;
+    }
+
+    // 双方都准备好后，处理回合
+    if (m_playerActionReady && m_opponentActionReady) {
         processTurn();
+        m_playerActionReady = false;
+        m_opponentActionReady = false;
         return true;
     }
-    
     return false;
 }
 

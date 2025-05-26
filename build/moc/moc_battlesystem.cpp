@@ -74,12 +74,8 @@ static constexpr auto qt_meta_stringdata_ZN12BattleSystemE = QtMocHelpers::strin
     "isPlayer",
     "battleLogUpdated",
     "message",
-    "onPlayerActionSelected",
-    "BattleAction",
-    "action",
-    "param1",
-    "param2",
-    "onAIActionSelected"
+    "playerActionConfirmed",
+    "opponentActionConfirmed"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -91,31 +87,27 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12BattleSystemE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      11,       // signalCount
+      13,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,  104,    2, 0x06,    1 /* Public */,
-       3,    1,  105,    2, 0x06,    2 /* Public */,
-       6,    2,  108,    2, 0x06,    4 /* Public */,
-       9,    1,  113,    2, 0x06,    7 /* Public */,
-      10,    5,  116,    2, 0x06,    9 /* Public */,
-      18,    2,  127,    2, 0x06,   15 /* Public */,
-      20,    2,  132,    2, 0x06,   18 /* Public */,
-      22,    3,  137,    2, 0x06,   21 /* Public */,
-      26,    4,  144,    2, 0x06,   25 /* Public */,
-      31,    3,  153,    2, 0x06,   30 /* Public */,
-      35,    1,  160,    2, 0x06,   34 /* Public */,
-
- // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      37,    3,  163,    2, 0x0a,   36 /* Public */,
-      37,    2,  170,    2, 0x2a,   40 /* Public | MethodCloned */,
-      37,    1,  175,    2, 0x2a,   43 /* Public | MethodCloned */,
-      42,    0,  178,    2, 0x0a,   45 /* Public */,
+       1,    0,   92,    2, 0x06,    1 /* Public */,
+       3,    1,   93,    2, 0x06,    2 /* Public */,
+       6,    2,   96,    2, 0x06,    4 /* Public */,
+       9,    1,  101,    2, 0x06,    7 /* Public */,
+      10,    5,  104,    2, 0x06,    9 /* Public */,
+      18,    2,  115,    2, 0x06,   15 /* Public */,
+      20,    2,  120,    2, 0x06,   18 /* Public */,
+      22,    3,  125,    2, 0x06,   21 /* Public */,
+      26,    4,  132,    2, 0x06,   25 /* Public */,
+      31,    3,  141,    2, 0x06,   30 /* Public */,
+      35,    1,  148,    2, 0x06,   34 /* Public */,
+      37,    0,  151,    2, 0x06,   36 /* Public */,
+      38,    0,  152,    2, 0x06,   37 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -129,11 +121,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12BattleSystemE[] = {
     QMetaType::Void, 0x80000000 | 11, 0x80000000 | 27, QMetaType::Int, QMetaType::Int,   19,   28,   29,   30,
     QMetaType::Void, 0x80000000 | 11, 0x80000000 | 11, QMetaType::Bool,   32,   33,   34,
     QMetaType::Void, QMetaType::QString,   36,
-
- // slots: parameters
-    QMetaType::Void, 0x80000000 | 38, QMetaType::Int, QMetaType::Int,   39,   40,   41,
-    QMetaType::Void, 0x80000000 | 38, QMetaType::Int,   39,   40,
-    QMetaType::Void, 0x80000000 | 38,   39,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -194,19 +182,9 @@ Q_CONSTINIT const QMetaObject BattleSystem::staticMetaObject = { {
         // method 'battleLogUpdated'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
-        // method 'onPlayerActionSelected'
+        // method 'playerActionConfirmed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<BattleAction, std::false_type>,
-        QtPrivate::TypeAndForceComplete<int, std::false_type>,
-        QtPrivate::TypeAndForceComplete<int, std::false_type>,
-        // method 'onPlayerActionSelected'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<BattleAction, std::false_type>,
-        QtPrivate::TypeAndForceComplete<int, std::false_type>,
-        // method 'onPlayerActionSelected'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<BattleAction, std::false_type>,
-        // method 'onAIActionSelected'
+        // method 'opponentActionConfirmed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -228,10 +206,8 @@ void BattleSystem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 8: _t->statStageChanged((*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<StatType>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[4]))); break;
         case 9: _t->creatureSwitched((*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
         case 10: _t->battleLogUpdated((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 11: _t->onPlayerActionSelected((*reinterpret_cast< std::add_pointer_t<BattleAction>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[3]))); break;
-        case 12: _t->onPlayerActionSelected((*reinterpret_cast< std::add_pointer_t<BattleAction>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
-        case 13: _t->onPlayerActionSelected((*reinterpret_cast< std::add_pointer_t<BattleAction>>(_a[1]))); break;
-        case 14: _t->onAIActionSelected(); break;
+        case 11: _t->playerActionConfirmed(); break;
+        case 12: _t->opponentActionConfirmed(); break;
         default: ;
         }
     }
@@ -314,6 +290,20 @@ void BattleSystem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
                 return;
             }
         }
+        {
+            using _q_method_type = void (BattleSystem::*)();
+            if (_q_method_type _q_method = &BattleSystem::playerActionConfirmed; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+                *result = 11;
+                return;
+            }
+        }
+        {
+            using _q_method_type = void (BattleSystem::*)();
+            if (_q_method_type _q_method = &BattleSystem::opponentActionConfirmed; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+                *result = 12;
+                return;
+            }
+        }
     }
 }
 
@@ -336,14 +326,14 @@ int BattleSystem::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 13;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 13)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 15;
+        _id -= 13;
     }
     return _id;
 }
@@ -422,5 +412,17 @@ void BattleSystem::battleLogUpdated(const QString & _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 10, _a);
+}
+
+// SIGNAL 11
+void BattleSystem::playerActionConfirmed()
+{
+    QMetaObject::activate(this, &staticMetaObject, 11, nullptr);
+}
+
+// SIGNAL 12
+void BattleSystem::opponentActionConfirmed()
+{
+    QMetaObject::activate(this, &staticMetaObject, 12, nullptr);
 }
 QT_WARNING_POP
