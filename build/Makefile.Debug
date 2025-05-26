@@ -171,7 +171,6 @@ rcc/qrc_resources.cpp: ../src/resources/resources.qrc \
 		../src/resources/images/creatures/TralaleroTralala.png \
 		../src/resources/images/creatures/ChimpanziniBananini.png \
 		../src/resources/images/creatures/LiriliLarila.png \
-		../src/resources/images/creatures/TungTungTung.png \
 		../src/resources/images/creatures/Luguanluguanlulushijiandaole.png \
 		../src/resources/images/creatures/CappuccinoAssassino.png \
 		../src/resources/images/skills/physical.png \
@@ -192,7 +191,9 @@ rcc/qrc_resources.cpp: ../src/resources/resources.qrc \
 		../src/resources/sounds/attack.wav \
 		../src/resources/sounds/battle_music.mp3 \
 		../src/resources/sounds/heal.wav \
-		../src/resources/sounds/victory.wav
+		../src/resources/sounds/victory.wav \
+		../src/resources/sprites/tung_tung_tung_tung_sahur_back.png \
+		../src/resources/sprites/tung_tung_tung_tung_sahur_front.png
 	D:\Qt_creater\6.8.1\mingw_64\bin\rcc.exe -name resources --no-zstd ..\src\resources\resources.qrc -o rcc\qrc_resources.cpp
 
 compiler_moc_predefs_make_all: moc/moc_predefs.h
@@ -319,7 +320,21 @@ moc/moc_gameengine.cpp: ../src/core/gameengine.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvariant.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdebug.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtextstream.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qset.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qhash.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvarlengtharray.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/q23utility.h \
 		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		moc/moc_predefs.h \
 		../../../Qt_creater/6.8.1/mingw_64/bin/moc.exe
 	D:\Qt_creater\6.8.1\mingw_64\bin\moc.exe $(DEFINES) --include D:/C++_code/ShanHaiZhiZhan/build/moc/moc_predefs.h -ID:/Qt_creater/6.8.1/mingw_64/mkspecs/win32-g++ -ID:/C++_code/ShanHaiZhiZhan -ID:/Qt_creater/6.8.1/mingw_64/include -ID:/Qt_creater/6.8.1/mingw_64/include/QtWidgets -ID:/Qt_creater/6.8.1/mingw_64/include/QtMultimedia -ID:/Qt_creater/6.8.1/mingw_64/include/QtGui -ID:/Qt_creater/6.8.1/mingw_64/include/QtNetwork -ID:/Qt_creater/6.8.1/mingw_64/include/QtCore -I. -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -ID:/Qt_creater/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\src\core\gameengine.h -o moc\moc_gameengine.cpp
@@ -429,6 +444,9 @@ moc/moc_battlesystem.cpp: ../src/battle/battlesystem.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVector \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvector.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QPair \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		../src/core/creature.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QString \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QMap \
@@ -439,6 +457,17 @@ moc/moc_battlesystem.cpp: ../src/battle/battlesystem.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvariant.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdebug.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtextstream.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qset.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qhash.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvarlengtharray.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/q23utility.h \
 		moc/moc_predefs.h \
 		../../../Qt_creater/6.8.1/mingw_64/bin/moc.exe
 	D:\Qt_creater\6.8.1\mingw_64\bin\moc.exe $(DEFINES) --include D:/C++_code/ShanHaiZhiZhan/build/moc/moc_predefs.h -ID:/Qt_creater/6.8.1/mingw_64/mkspecs/win32-g++ -ID:/C++_code/ShanHaiZhiZhan -ID:/Qt_creater/6.8.1/mingw_64/include -ID:/Qt_creater/6.8.1/mingw_64/include/QtWidgets -ID:/Qt_creater/6.8.1/mingw_64/include/QtMultimedia -ID:/Qt_creater/6.8.1/mingw_64/include/QtGui -ID:/Qt_creater/6.8.1/mingw_64/include/QtNetwork -ID:/Qt_creater/6.8.1/mingw_64/include/QtCore -I. -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -ID:/Qt_creater/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\src\battle\battlesystem.h -o moc\moc_battlesystem.cpp
@@ -649,7 +678,11 @@ moc/moc_mainwindow.cpp: ../src/ui/mainwindow.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
 		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		moc/moc_predefs.h \
 		../../../Qt_creater/6.8.1/mingw_64/bin/moc.exe
 	D:\Qt_creater\6.8.1\mingw_64\bin\moc.exe $(DEFINES) --include D:/C++_code/ShanHaiZhiZhan/build/moc/moc_predefs.h -ID:/Qt_creater/6.8.1/mingw_64/mkspecs/win32-g++ -ID:/C++_code/ShanHaiZhiZhan -ID:/Qt_creater/6.8.1/mingw_64/include -ID:/Qt_creater/6.8.1/mingw_64/include/QtWidgets -ID:/Qt_creater/6.8.1/mingw_64/include/QtMultimedia -ID:/Qt_creater/6.8.1/mingw_64/include/QtGui -ID:/Qt_creater/6.8.1/mingw_64/include/QtNetwork -ID:/Qt_creater/6.8.1/mingw_64/include/QtCore -I. -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -ID:/Qt_creater/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\src\ui\mainwindow.h -o moc\moc_mainwindow.cpp
@@ -875,6 +908,7 @@ moc/moc_battlescene.cpp: ../src/ui/battlescene.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
 		../src/battle/battlesystem.h \
 		moc/moc_predefs.h \
 		../../../Qt_creater/6.8.1/mingw_64/bin/moc.exe
@@ -1103,7 +1137,6 @@ moc/moc_preparescene.cpp: ../src/ui/preparescene.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qlayoutitem.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qgridlayout.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QGridLayout \
 		../src/core/gameengine.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVector \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvector.h \
@@ -1115,7 +1148,11 @@ moc/moc_preparescene.cpp: ../src/ui/preparescene.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
 		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		moc/moc_predefs.h \
 		../../../Qt_creater/6.8.1/mingw_64/bin/moc.exe
 	D:\Qt_creater\6.8.1\mingw_64\bin\moc.exe $(DEFINES) --include D:/C++_code/ShanHaiZhiZhan/build/moc/moc_predefs.h -ID:/Qt_creater/6.8.1/mingw_64/mkspecs/win32-g++ -ID:/C++_code/ShanHaiZhiZhan -ID:/Qt_creater/6.8.1/mingw_64/include -ID:/Qt_creater/6.8.1/mingw_64/include/QtWidgets -ID:/Qt_creater/6.8.1/mingw_64/include/QtMultimedia -ID:/Qt_creater/6.8.1/mingw_64/include/QtGui -ID:/Qt_creater/6.8.1/mingw_64/include/QtNetwork -ID:/Qt_creater/6.8.1/mingw_64/include/QtCore -I. -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -ID:/Qt_creater/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\src\ui\preparescene.h -o moc\moc_preparescene.cpp
@@ -1367,8 +1404,12 @@ moc/moc_loadgamedialog.cpp: ../src/ui/loadgamedialog.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
 		../src/core/gameengine.h \
 		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		moc/moc_predefs.h \
 		../../../Qt_creater/6.8.1/mingw_64/bin/moc.exe
 	D:\Qt_creater\6.8.1\mingw_64\bin\moc.exe $(DEFINES) --include D:/C++_code/ShanHaiZhiZhan/build/moc/moc_predefs.h -ID:/Qt_creater/6.8.1/mingw_64/mkspecs/win32-g++ -ID:/C++_code/ShanHaiZhiZhan -ID:/Qt_creater/6.8.1/mingw_64/include -ID:/Qt_creater/6.8.1/mingw_64/include/QtWidgets -ID:/Qt_creater/6.8.1/mingw_64/include/QtMultimedia -ID:/Qt_creater/6.8.1/mingw_64/include/QtGui -ID:/Qt_creater/6.8.1/mingw_64/include/QtNetwork -ID:/Qt_creater/6.8.1/mingw_64/include/QtCore -I. -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -ID:/Qt_creater/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -ID:/Qt_creater/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\src\ui\loadgamedialog.h -o moc\moc_loadgamedialog.cpp
@@ -1815,6 +1856,7 @@ moc/battlescene.moc: ../src/ui/battlescene.cpp \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
 		../src/battle/battlesystem.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QPropertyAnimation \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qpropertyanimation.h \
@@ -1826,6 +1868,9 @@ moc/battlescene.moc: ../src/ui/battlescene.cpp \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QScrollArea \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qscrollarea.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QscrollBar \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qscrollbar.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qabstractslider.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/QFont \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/QPixmap \
 		moc/moc_predefs.h \
@@ -2067,7 +2112,11 @@ obj/main.o: ../src/main.cpp ../../../../Qt_creater/6.8.1/mingw_64/include/QtWidg
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
-		../src/battle/battlesystem.h
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
+		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\main.o ..\src\main.cpp
 
 obj/creature.o: ../src/core/creature.cpp ../src/core/creature.h \
@@ -2165,16 +2214,11 @@ obj/creature.o: ../src/core/creature.cpp ../src/core/creature.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
-		../src/battle/battlesystem.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QObject \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcoreevent.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qscopedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvariant.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmetatype.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdatastream.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qscopedpointer.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qiodevicebase.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfloat16.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmath.h \
@@ -2182,16 +2226,10 @@ obj/creature.o: ../src/core/creature.cpp ../src/core/creature.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmetacontainer.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcontainerinfo.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtaggedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfunctionaltools_impl.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qscopeguard.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject_impl.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbindingstorage.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QRandomGenerator \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qrandom.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QDateTime \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdatetime.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcalendar.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qlocale.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvariant.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdebug.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtextstream.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcontiguouscache.h \
@@ -2200,7 +2238,23 @@ obj/creature.o: ../src/core/creature.cpp ../src/core/creature.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qset.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qhash.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvarlengtharray.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/q23utility.h
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/q23utility.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcoreevent.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject_impl.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbindingstorage.h \
+		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QObject \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QRandomGenerator \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qrandom.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QDateTime \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdatetime.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcalendar.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qlocale.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QtMath
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\creature.o ..\src\core\creature.cpp
 
 obj/ability.o: ../src/core/ability.cpp ../src/core/ability.h \
@@ -2490,13 +2544,8 @@ obj/gameengine.o: ../src/core/gameengine.cpp ../src/core/gameengine.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
-		../src/battle/battlesystem.h \
-		../src/core/savesystem.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QJsonObject \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qjsonobject.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qjsonvalue.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcborvalue.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcborcommon.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvariant.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdebug.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtextstream.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcontiguouscache.h \
@@ -2505,11 +2554,20 @@ obj/gameengine.o: ../src/core/gameengine.cpp ../src/core/gameengine.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qset.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qhash.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvarlengtharray.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/q23utility.h \
+		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
+		../src/core/savesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QJsonObject \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qjsonobject.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qjsonvalue.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcborvalue.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcborcommon.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdatetime.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcalendar.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qlocale.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvariant.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/q23utility.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qregularexpression.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qurl.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/quuid.h \
@@ -2667,9 +2725,13 @@ obj/savesystem.o: ../src/core/savesystem.cpp ../src/core/savesystem.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
 		../src/core/gameengine.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QObject \
 		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QDir \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdir.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdirlisting.h \
@@ -2787,6 +2849,9 @@ obj/battlesystem.o: ../src/battle/battlesystem.cpp ../src/battle/battlesystem.h 
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVector \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvector.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QPair \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		../src/core/creature.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QString \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QMap \
@@ -2797,6 +2862,17 @@ obj/battlesystem.o: ../src/battle/battlesystem.cpp ../src/battle/battlesystem.h 
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvariant.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdebug.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtextstream.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qset.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qhash.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvarlengtharray.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/q23utility.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QRandomGenerator \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qrandom.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\battlesystem.o ..\src\battle\battlesystem.cpp
@@ -2893,19 +2969,14 @@ obj/skill.o: ../src/battle/skill.cpp ../src/battle/skill.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qshareddata.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qshareddata_impl.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QPair \
-		../src/core/creature.h \
 		../src/core/ability.h \
+		../src/core/creature.h \
 		../src/battle/effect.h \
-		../src/battle/battlesystem.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QObject \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcoreevent.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qscopedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvariant.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmetatype.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdatastream.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qscopedpointer.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qiodevicebase.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfloat16.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmath.h \
@@ -2913,9 +2984,28 @@ obj/skill.o: ../src/battle/skill.cpp ../src/battle/skill.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmetacontainer.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcontainerinfo.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtaggedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfunctionaltools_impl.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qscopeguard.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdebug.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtextstream.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qset.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qhash.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvarlengtharray.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/q23utility.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcoreevent.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject_impl.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbindingstorage.h \
+		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QObject \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QRandomGenerator \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qrandom.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\skill.o ..\src\battle\skill.cpp
@@ -2998,33 +3088,26 @@ obj/effect.o: ../src/battle/effect.cpp ../src/battle/effect.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qstringconverter.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qstringconverter_base.h \
 		../src/core/ability.h \
-		../src/core/creature.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVector \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvector.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qlist.h \
+		../src/core/type.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QMap \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmap.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qhashfunctions.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qiterator.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qlist.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbytearraylist.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qstringlist.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qalgorithms.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QMap \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmap.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qshareddata.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qshareddata_impl.h \
-		../src/core/type.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QPair \
-		../src/battle/skill.h \
-		../src/battle/battlesystem.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QObject \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcoreevent.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qscopedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVector \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvector.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvariant.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmetatype.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdatastream.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qscopedpointer.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qiodevicebase.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfloat16.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmath.h \
@@ -3032,11 +3115,33 @@ obj/effect.o: ../src/battle/effect.cpp ../src/battle/effect.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qmetacontainer.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcontainerinfo.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtaggedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfunctionaltools_impl.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qscopeguard.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdebug.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtextstream.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qset.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qhash.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvarlengtharray.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/q23utility.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcoreevent.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject_impl.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbindingstorage.h \
+		../src/core/creature.h \
+		../src/battle/skill.h \
+		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QObject \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QRandomGenerator \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qrandom.h
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qrandom.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QStringList
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\effect.o ..\src\battle\effect.cpp
 
 obj/mainwindow.o: ../src/ui/mainwindow.cpp ../src/ui/mainwindow.h \
@@ -3245,7 +3350,11 @@ obj/mainwindow.o: ../src/ui/mainwindow.cpp ../src/ui/mainwindow.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
 		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		ui/ui_mainwindow.h \
 		../src/ui/battlescene.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QWidget \
@@ -3265,9 +3374,6 @@ obj/mainwindow.o: ../src/ui/mainwindow.cpp ../src/ui/mainwindow.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qgridlayout.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QHBoxLayout \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QGridLayout \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		../src/ui/preparescene.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QListWidget \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qlistwidget.h \
@@ -3313,19 +3419,7 @@ obj/mainwindow.o: ../src/ui/mainwindow.cpp ../src/ui/mainwindow.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/qtextoption.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QMessageBox \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qmessagebox.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QFileDialog \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qfiledialog.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdir.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdirlisting.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfileinfo.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimezone.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtMultimedia/QSoundEffect \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtMultimedia/qsoundeffect.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtMultimedia/qaudio.h
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\mainwindow.o ..\src\ui\mainwindow.cpp
 
 obj/battlescene.o: ../src/ui/battlescene.cpp ../src/ui/battlescene.h \
@@ -3549,6 +3643,7 @@ obj/battlescene.o: ../src/ui/battlescene.cpp ../src/ui/battlescene.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
 		../src/battle/battlesystem.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QPropertyAnimation \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qpropertyanimation.h \
@@ -3560,6 +3655,9 @@ obj/battlescene.o: ../src/ui/battlescene.cpp ../src/ui/battlescene.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QScrollArea \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qscrollarea.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QscrollBar \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qscrollbar.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qabstractslider.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/QFont \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/QPixmap \
 		moc/battlescene.moc
@@ -3788,7 +3886,6 @@ obj/preparescene.o: ../src/ui/preparescene.cpp ../src/ui/preparescene.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qlayoutitem.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qgridlayout.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QHBoxLayout \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QGridLayout \
 		../src/core/gameengine.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVector \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvector.h \
@@ -3800,12 +3897,25 @@ obj/preparescene.o: ../src/ui/preparescene.cpp ../src/ui/preparescene.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
 		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
+		../src/ui/savegamedialog.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QDialog \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qdialog.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QLineEdit \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qlineedit.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/qtextcursor.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/qtextformat.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/qpen.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/qtextoption.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QGridLayout \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/QIcon \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/QPixmap \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QMessageBox \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qmessagebox.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qdialog.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QFile \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfile.h \
@@ -4059,8 +4169,12 @@ obj/loadgamedialog.o: ../src/ui/loadgamedialog.cpp ../src/ui/loadgamedialog.h \
 		../src/core/ability.h \
 		../src/battle/skill.h \
 		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
 		../src/core/gameengine.h \
 		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QMessageBox \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qmessagebox.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
@@ -4288,7 +4402,8 @@ obj/savegamedialog.o: ../src/ui/savegamedialog.cpp ../src/ui/savegamedialog.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/QRegularExpressionValidator \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/qvalidator.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qregularexpression.h
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qregularexpression.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QRegularExpression
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\savegamedialog.o ..\src\ui\savegamedialog.cpp
 
 obj/qrc_resources.o: rcc/qrc_resources.cpp 
