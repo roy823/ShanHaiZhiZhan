@@ -38,16 +38,16 @@ struct qt_meta_tag_ZN10MainWindowE_t {};
 #ifdef QT_MOC_HAS_STRINGDATA
 static constexpr auto qt_meta_stringdata_ZN10MainWindowE = QtMocHelpers::stringData(
     "MainWindow",
-    "on_btnNewGame_clicked",
+    "onNewGameClicked",
     "",
-    "on_btnLoadGame_clicked",
-    "on_btnSettings_clicked",
-    "on_btnExit_clicked",
+    "onLoadGameClicked",
+    "onSettingsClicked",
+    "onExitClicked",
     "onGameStateChanged",
     "GameState",
-    "state",
+    "newState",
     "onBattleStarting",
-    "onBattleEnded",
+    "onBattleEndedSignal",
     "BattleResult",
     "result"
 );
@@ -98,20 +98,20 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_tag_ZN10MainWindowE_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>,
-        // method 'on_btnNewGame_clicked'
+        // method 'onNewGameClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_btnLoadGame_clicked'
+        // method 'onLoadGameClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_btnSettings_clicked'
+        // method 'onSettingsClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_btnExit_clicked'
+        // method 'onExitClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onGameStateChanged'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<GameState, std::false_type>,
         // method 'onBattleStarting'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'onBattleEnded'
+        // method 'onBattleEndedSignal'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<BattleResult, std::false_type>
     >,
@@ -123,13 +123,13 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<MainWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->on_btnNewGame_clicked(); break;
-        case 1: _t->on_btnLoadGame_clicked(); break;
-        case 2: _t->on_btnSettings_clicked(); break;
-        case 3: _t->on_btnExit_clicked(); break;
+        case 0: _t->onNewGameClicked(); break;
+        case 1: _t->onLoadGameClicked(); break;
+        case 2: _t->onSettingsClicked(); break;
+        case 3: _t->onExitClicked(); break;
         case 4: _t->onGameStateChanged((*reinterpret_cast< std::add_pointer_t<GameState>>(_a[1]))); break;
         case 5: _t->onBattleStarting(); break;
-        case 6: _t->onBattleEnded((*reinterpret_cast< std::add_pointer_t<BattleResult>>(_a[1]))); break;
+        case 6: _t->onBattleEndedSignal((*reinterpret_cast< std::add_pointer_t<BattleResult>>(_a[1]))); break;
         default: ;
         }
     }

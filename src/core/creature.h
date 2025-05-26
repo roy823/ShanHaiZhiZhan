@@ -127,6 +127,7 @@ class TungTungTung : public Creature
 {
 public:
     TungTungTung(int level = 1);
+    virtual ~TungTungTung();
 
     // 特殊行为或能力
     virtual void onTurnStart() override;
@@ -138,6 +139,7 @@ class BombardinoCrocodillo : public Creature
 {
 public:
     BombardinoCrocodillo(int level = 1);
+    virtual ~BombardinoCrocodillo();
 
     // 特殊行为或能力
     virtual void onTurnStart() override;
@@ -149,6 +151,7 @@ class TralaleroTralala : public Creature
 {
 public:
     TralaleroTralala(int level = 1);
+    virtual ~TralaleroTralala();
 
     // 特殊行为或能力
     virtual void onTurnStart() override;
@@ -160,6 +163,7 @@ class LiriliLarila : public Creature
 {
 public:
     LiriliLarila(int level = 1);
+    virtual ~LiriliLarila();
 
     // 特殊行为或能力
     virtual void onTurnStart() override;
@@ -171,6 +175,7 @@ class ChimpanziniBananini : public Creature
 {
 public:
     ChimpanziniBananini(int level = 1);
+    virtual ~ChimpanziniBananini();
 
     // 变身状态
     bool isInBerserkForm() const;
@@ -191,6 +196,7 @@ class Luguanluguanlulushijiandaole : public Creature
 {
 public:
     Luguanluguanlulushijiandaole(int level = 1);
+    virtual ~Luguanluguanlulushijiandaole();
 
     // 时间操控相关
     void recordBattleState();
@@ -219,6 +225,7 @@ class CappuccinoAssassino : public Creature
 {
 public:
     CappuccinoAssassino(int level = 1);
+    virtual ~CappuccinoAssassino();
 
     // 影子潜伏状态
     bool isInShadowState() const;

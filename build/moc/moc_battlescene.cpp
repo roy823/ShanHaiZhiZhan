@@ -59,7 +59,9 @@ static constexpr auto qt_meta_stringdata_ZN11BattleSceneE = QtMocHelpers::string
     "onCreatureSwitched",
     "oldCreature",
     "newCreature",
-    "isPlayer"
+    "isPlayer",
+    "onFifthSkillButtonClicked",
+    "onRestorePPButtonClicked"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -71,7 +73,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11BattleSceneE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -79,15 +81,17 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11BattleSceneE[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   68,    2, 0x08,    1 /* Private */,
-       4,    0,   71,    2, 0x08,    3 /* Private */,
-       5,    0,   72,    2, 0x08,    4 /* Private */,
-       6,    1,   73,    2, 0x08,    5 /* Private */,
-       8,    2,   76,    2, 0x08,    7 /* Private */,
-      11,    1,   81,    2, 0x08,   10 /* Private */,
-      12,    2,   84,    2, 0x08,   12 /* Private */,
-      16,    2,   89,    2, 0x08,   15 /* Private */,
-      18,    3,   94,    2, 0x08,   18 /* Private */,
+       1,    1,   80,    2, 0x08,    1 /* Private */,
+       4,    0,   83,    2, 0x08,    3 /* Private */,
+       5,    0,   84,    2, 0x08,    4 /* Private */,
+       6,    1,   85,    2, 0x08,    5 /* Private */,
+       8,    2,   88,    2, 0x08,    7 /* Private */,
+      11,    1,   93,    2, 0x08,   10 /* Private */,
+      12,    2,   96,    2, 0x08,   12 /* Private */,
+      16,    2,  101,    2, 0x08,   15 /* Private */,
+      18,    3,  106,    2, 0x08,   18 /* Private */,
+      22,    0,  113,    2, 0x08,   22 /* Private */,
+      23,    0,  114,    2, 0x08,   23 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -99,6 +103,8 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11BattleSceneE[] = {
     QMetaType::Void, 0x80000000 | 13, QMetaType::Int,   14,   15,
     QMetaType::Void, 0x80000000 | 13, QMetaType::Int,   14,   17,
     QMetaType::Void, 0x80000000 | 13, 0x80000000 | 13, QMetaType::Bool,   19,   20,   21,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -141,7 +147,11 @@ Q_CONSTINIT const QMetaObject BattleScene::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<Creature *, std::false_type>,
         QtPrivate::TypeAndForceComplete<Creature *, std::false_type>,
-        QtPrivate::TypeAndForceComplete<bool, std::false_type>
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'onFifthSkillButtonClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onRestorePPButtonClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
@@ -160,6 +170,8 @@ void BattleScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 6: _t->onDamageCaused((*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         case 7: _t->onHealingReceived((*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         case 8: _t->onCreatureSwitched((*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Creature*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
+        case 9: _t->onFifthSkillButtonClicked(); break;
+        case 10: _t->onRestorePPButtonClicked(); break;
         default: ;
         }
     }
@@ -184,14 +196,14 @@ int BattleScene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 11;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 11)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 9;
+        _id -= 11;
     }
     return _id;
 }
