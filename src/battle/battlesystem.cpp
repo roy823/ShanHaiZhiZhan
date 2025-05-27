@@ -514,17 +514,27 @@ void BattleSystem::executeActionQueue() {
                             int damage = calculateDamage(actor, target, skillToUse); // BattleSystem计算伤害
                             target->takeDamage(damage); // 应用伤害
 
-                            // 添加更详细的战斗日志
-                            QString stabBonusText = actor->hasTypeAdvantage(skillToUse->getType()) ? "(属性一致加成) " : "";
+                            // 添加更详细的战斗日志 - 修复格式问题
+                            QString stabBonusText = actor->hasTypeAdvantage(skillToUse->getType()) ? "（属性一致加成）" : "";
                             double effectiveness = actor->getTypeEffectivenessAgainst(target, skillToUse->getType());
                             QString effectText = "";
-                            if (effectiveness > 1.5) effectText = " 效果拔群!"; // 假设1.5倍算拔群
-                            else if (effectiveness == 1.5) effectText = " 效果绝佳!";
-                            else if (effectiveness < 1.0 && effectiveness > 0.0) effectText = " 效果不理想.";
-                            else if (effectiveness == 0.0) effectText = " 没有效果.";
+                            if (effectiveness > 1.5) effectText = "效果拔群！"; 
+                            else if (effectiveness == 1.5) effectText = "效果绝佳！";
+                            else if (effectiveness < 1.0 && effectiveness > 0.0) effectText = "效果不理想。";
+                            else if (effectiveness == 0.0) effectText = "没有效果。";
                             
-                            addBattleLog(QString("%1的%2对%3造成了 %4%5点伤害!%6").arg(actor->getName()).arg(skillToUse->getName()).arg(target->getName()).arg(stabBonusText).arg(damage).arg(effectText));
-                            emit damageCaused(target, damage); // 发出伤害信号
+                            // 使用正确的参数顺序添加战斗日志
+                            addBattleLog(QString("%1的%2对%3造成了%4点伤害！%5 %6")
+                                .arg(actor->getName())
+                                .arg(skillToUse->getName())
+                                .arg(target->getName())
+                                .arg(damage)
+                                .arg(stabBonusText)
+                                .arg(effectText), 
+                                actor, target);
+                                
+                            // 发出伤害信号，但不触发额外的伤害日志
+                            emit damageCaused(target, damage);
 
                             // 检查目标是否因此次伤害而濒死
                             if (target->isDead()) {
@@ -539,7 +549,7 @@ void BattleSystem::executeActionQueue() {
                     // 状态技能或攻击技能附带的非伤害效果已在 Skill::use -> Effect::apply 中处理
                     // 检查目标是否因技能效果（如中毒、诅咒等间接伤害）而濒死
                     if (target && target->isDead() && (skillToUse->getCategory() == SkillCategory::STATUS || skillToUse->getCategory() == SkillCategory::PHYSICAL || skillToUse->getCategory() == SkillCategory::SPECIAL) ) {
-                         // 此检查可能在伤害判定后有些多余，但保留以防万一
+                         // 此检查可能有些多余，但保留以防万一
                          if (checkBattleEnd()) { emit battleEnded(m_battleResult); return; }
                     }
                 } else {
@@ -629,7 +639,7 @@ void BattleSystem::processTurnEndEffects() {
     addBattleLog("回合结束效果结算...");
     Creature* playerC = getPlayerActiveCreature();
     Creature* opponentC = getOpponentActiveCreature();
-    if (playerC && !playerC->isDead()) playerC->onTurnEnd();
+    if (playerC && !playerC->isDead()) playerC->onTurnEnd(this);
     // 检查玩家回合结束效果是否导致战斗结束
     if (checkBattleEnd() && m_battleResult != BattleResult::ONGOING) return; 
     if (opponentC && !opponentC->isDead()) opponentC->onTurnEnd(this);
@@ -665,7 +675,7 @@ void BattleSystem::triggerHealingReceived(Creature* creature, int amount) {
     }
 }
 
-void BattleSystem::triggeStatusCondition::NONE) {rDamageCaused(Creature* creature, int amount, StatusCondition fromStatus = 
+void BattleSystem::triggerDamageCaused(Creature* creature, int amount, StatusCondition fromStatus) {
     if (amount > 0) {
         // 根据伤害来源输出不同的日志
         if (fromStatus != StatusCondition::NONE) {

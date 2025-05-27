@@ -147,18 +147,16 @@ bool TurnBasedEffect::decrementDuration()
     return m_currentDuration <= 0;
 }
 
-void TurnBasedEffect::executeTurnLogic(Creature* affectedCreature, Creature* sourceCreature_unused, BattleSystem* battle)
+void TurnBasedEffect::executeTurnLogic(Creature* affectedCreature, Creature* sourceCreature, BattleSystem* battle)
 {
-    // 中文注释：执行存储在该回合效果中的具体逻辑
-    // affectedCreature: 当前受此效果影响的精灵
-    // sourceCreature_unused: 效果的原始来源（可能已离场或非直接相关），通常用this->getOriginalSource()
-    // battle: 战斗系统实例
-    if (m_effectLogic && affectedCreature)
-    {
-        // 调用存储的lambda或函数，传递必要的上下文
-        // 注意：sourceCreature参数在此处可能不准确，应使用m_originalSource
-        m_effectLogic(affectedCreature, m_originalSource, battle, this);
+    if (!affectedCreature) return;
+    
+    // 执行效果逻辑
+    if (m_effectLogic) {
+        m_effectLogic(affectedCreature, sourceCreature, battle, this);
     }
+    
+    // 效果逻辑内部应该自己处理伤害和日志，不在这里重复触发
 }
 
 

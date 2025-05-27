@@ -531,20 +531,18 @@ void Creature::onTurnEnd(BattleSystem* battle)
         }
     }    
     // 执行回合结束时的持续效果
-    for (auto it = m_turnEffects.begin(); it != m_turnEffects.end(); /* 空 */) {
-        TurnBasedEffect* effect = *it;
+    QVector<TurnBasedEffect*> effectsToProcess = m_turnEffects;
+    for (TurnBasedEffect* effect : effectsToProcess) {
         if (effect && !effect->isOnTurnStart()) {
             effect->executeTurnLogic(this, effect->getOriginalSource(), battle);
             if (effect->decrementDuration()) {
                 // 效果已结束
-                if (battle) battle->addBattleLog(QString("%1 的效果 %2 结束了。").arg(m_name).arg(effect->getDescription()));
-                delete effect;
-                it = m_turnEffects.erase(it);
-            } else {
-                ++it;
+                if (battle) {
+                    // 使用triggerEffectCleared而不是直接添加日志
+                    battle->triggerEffectCleared(this, effect->getDescription());
+                }
+                removeTurnEffect(effect); // 使用安全删除方法
             }
-        } else {
-            ++it;
         }
     }
     

@@ -45,49 +45,28 @@ int Skill::getPriority() const { return m_priority; }
 bool Skill::use(Creature *user, Creature *target, BattleSystem *battle)
 {
     // 检查使用者和战斗系统是否存在
-    if (!user || !battle)
-    {
-        // battle->addBattleLog("技能使用失败：参数无效。"); // 假设有战斗日志系统
+    if (!user || !battle) {
         return false;
     }
 
-    // 检查技能是否命中 (状态技能可能不需要目标，或者目标是自身)
-    if (m_category == SkillCategory::STATUS && !target) { // 对于一些以自身为目标的状态技能
-        // battle->addBattleLog(QString("%1 使用了 %2。").arg(user->getName()).arg(m_name));
-        // 应用效果 (通常作用于自身)
-        for (Effect *effect : m_effects) {
-            if (effect) {
-            Creature* effectTarget = effect->isTargetSelf() ? user : target;
-            effect->apply(user, effectTarget, battle);
-            }
-        }
+    // 对于需要目标的技能，检查目标是否存在
+    if (!target && m_category != SkillCategory::STATUS) {
+        return false;
+    }
+
+    // 状态技能特殊处理（可能自身为目标）
+    if (m_category == SkillCategory::STATUS && !target) {
+        // 状态技能如果没有目标，通常是作用于自身
+        // 应用效果的逻辑将由子类或BattleSystem处理
         return true; // 状态技能命中通常为必中或有独立判定
     }
 
-    // 对于需要目标或有命中判定的技能
-    if (!target) { // 如果是攻击或指向性状态技能但无目标
-         // battle->addBattleLog(QString("%1 的技能 %2 没有目标!").arg(user->getName()).arg(m_name));
-        return false;
-    }
-
-    if (checkHit(user, target, battle))
-    {
-        // battle->addBattleLog(QString("%1 的 %2 命中了 %3!").arg(user->getName()).arg(m_name).arg(target->getName()));
-
-        // 应用所有附加效果 (例如: 降低防御、施加中毒等)
-        // 伤害计算和应用将在BattleSystem中处理，这里只应用非伤害性效果
-        for (Effect *effect : m_effects)
-        {
-           if (effect) effect->apply(user, target, battle);
-        }
-        // 对于攻击型技能，实际伤害计算和应用由BattleSystem在执行队列时处理
-        // 这里返回true表示技能"成功发动"（命中并通过了PP检查）
-        return true;
-    }
-    else
-    {
-        // battle->addBattleLog(QString("%1 的 %2 未能命中 %3!").arg(user->getName()).arg(m_name).arg(target->getName()));
-        return false; // 未命中
+    // 进行命中判定
+    if (checkHit(user, target, battle)) {
+        // 效果在子类中处理
+        return true; // 命中成功
+    } else {
+        return false; // 技能未命中
     }
 }
 
@@ -228,27 +207,27 @@ StatusSkill::StatusSkill(const QString &name, ElementType type,
 
 bool StatusSkill::use(Creature *user, Creature *target, BattleSystem *battle)
 {
-    // 状态技能不造成直接伤害，主要应用效果
     if (!user || !battle) return false;
-    // 状态技能通常对自己或对方使用，目标可能需要判断
-    Creature* actualTarget = target; // 默认目标是传入的target
-    if (checkHit(user, actualTarget, battle)) // 状态技能也需要命中判定
-    {
-        // battle->addBattleLog(QString("%1 使用了 %2!").arg(user->getName()).arg(m_name));
-        for (Effect *effect : m_effects)
-        {
+    
+    // 状态技能对自己或对方使用，需要确定目标
+    Creature* actualTarget = target;
+    if (!actualTarget && !m_effects.isEmpty() && m_effects.first()->isTargetSelf()) {
+        actualTarget = user; // 如果效果是自身目标且未提供目标，则默认为自己
+    }
+    
+    // 进行命中判定
+    if (checkHit(user, actualTarget, battle)) {
+        // 应用所有效果
+        for (Effect *effect : m_effects) {
             if (effect) {
                 Creature* effectTarget = effect->isTargetSelf() ? user : actualTarget;
-                effect->apply(user, effectTarget, battle);
+                if (effectTarget) // 确保目标有效
+                    effect->apply(user, effectTarget, battle);
             }
         }
         return true;
     }
-    else
-    {
-        //battle->addBattleLog(QString("%1 的 %2 未能命中!").arg(user->getName()).arg(m_name));
-        return false;
-    }
+    return false;
 }
 
 
@@ -272,28 +251,24 @@ int CompositeSkill::getEffectChance() const
 
 bool CompositeSkill::use(Creature *user, Creature *target, BattleSystem *battle)
 {
-    // 首先执行基础技能的使用逻辑 (PP消耗、命中判断等)
-    // 基类的use方法已经不再直接应用伤害，仅处理命中和PP
-    bool hitSuccess = Skill::use(user, target, battle); // Skill::use现在不应用效果，只检查PP和命中
+    // 首先执行命中判定等基本检查
+    bool hitSuccess = Skill::use(user, target, battle);
 
-    if (hitSuccess) // 如果技能命中 (PP消耗已在Skill::use中处理)
-    {
-        // battle->addBattleLog(QString("%1 的 %2 命中了 %3!").arg(user->getName()).arg(m_name).arg(target->getName()));
-        // 伤害计算和应用由BattleSystem处理
-
+    if (hitSuccess) {
         // 检查是否触发附加效果
-        if (QRandomGenerator::global()->bounded(100) < m_effectChance)
-        {
-            // battle->addBattleLog(QString("%1 的 %2 触发了附加效果!").arg(user->getName()).arg(m_name));
-            for (Effect *effect : m_effects) // 应用所有定义的附加效果
-            {
-                if (effect) effect->apply(user, target, battle);
+        if (QRandomGenerator::global()->bounded(100) < m_effectChance) {
+            // 应用所有附加效果
+            for (Effect *effect : m_effects) {
+                if (effect) {
+                    // 确定实际目标
+                    Creature* actualTarget = effect->isTargetSelf() ? user : target;
+                    effect->apply(user, actualTarget, battle);
+                }
             }
         }
-        return true; // 表示技能成功发动并命中
+        return true;
     }
-    // battle->addBattleLog(QString("%1 的 %2 未能命中 %3!").arg(user->getName()).arg(m_name).arg(target->getName()));
-    return false; // 技能未命中
+    return false;
 }
 
 

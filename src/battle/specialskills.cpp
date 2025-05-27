@@ -125,22 +125,23 @@ LifeSiphonFieldSkill::LifeSiphonFieldSkill()
         if (!battle || !source || !affectedCreature)
             return;
         
-        // 正确获取对手
+        // 获取对手
         Creature *opponent = battle->getOpponentActiveCreature() == source ? 
-                         battle->getPlayerActiveCreature() : 
-                         battle->getOpponentActiveCreature();
-                         
+                        battle->getPlayerActiveCreature() : 
+                        battle->getOpponentActiveCreature();
+                        
         if (opponent && !opponent->isDead())
         {
             // 只对非草系精灵造成伤害
             if (opponent->getType().getPrimaryType() != ElementType::GRASS &&
                 (opponent->getType().getSecondaryType() == ElementType::NONE || 
-                 opponent->getType().getSecondaryType() != ElementType::GRASS))
+                opponent->getType().getSecondaryType() != ElementType::GRASS))
             {
                 int damage = opponent->getMaxHP() / 16;
-                opponent->takeDamage(damage);
-                // 使用触发器方法
-                battle->triggerDamageCaused(opponent, damage);
+                opponent->takeDamage(damage);  // 只造成伤害
+                
+                // 使用战斗系统的触发器，带上效果名称作为区分
+                battle->triggerDamageCaused(opponent, damage, StatusCondition::NONE); // 使用NONE表示非状态伤害
             }
         }
         
@@ -148,7 +149,6 @@ LifeSiphonFieldSkill::LifeSiphonFieldSkill()
         if (!affectedCreature->isDead()) {
             int healAmount = affectedCreature->getMaxHP() / 8;
             affectedCreature->heal(healAmount);
-            // 使用触发器方法
             battle->triggerHealingReceived(affectedCreature, healAmount);
         }
     };
