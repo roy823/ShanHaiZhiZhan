@@ -82,15 +82,15 @@ AirspaceSupremacySkill::AirspaceSupremacySkill()
     : FifthSkill("空域压制", ElementType::FLYING, SkillCategory::STATUS, 0, 3, 100)
 {
        auto airspaceLambda = [](Creature *source, Creature *affectedCreature, BattleSystem *battle, TurnBasedEffect *effect)
-        {
-            if (!battle || !affectedCreature || affectedCreature->isDead())
-                return;
+{
+    if (!battle || !affectedCreature || affectedCreature->isDead())
+        return;
 
-            int oldSpeedStage = affectedCreature->getStatStages().getStage(StatType::SPEED);
-            affectedCreature->modifyStatStage(StatType::SPEED, -1);
-            battle->triggerStatStageChanged(affectedCreature, StatType::SPEED, oldSpeedStage, 
-                                            affectedCreature->getStatStages().getStage(StatType::SPEED));
-        };
+    int oldSpeedStage = affectedCreature->getStatStages().getStage(StatType::SPEED);
+    affectedCreature->modifyStatStage(StatType::SPEED, -1);
+    battle->triggerStatStageChanged(affectedCreature, StatType::SPEED, oldSpeedStage, 
+                                    affectedCreature->getStatStages().getStage(StatType::SPEED));
+};
     
     TurnBasedEffect *debuffEffect = new TurnBasedEffect(3, airspaceLambda, true);
     debuffEffect->setTargetSelf(false);  // 效果附着在对手身上

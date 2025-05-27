@@ -246,7 +246,7 @@ bool StatusSkill::use(Creature *user, Creature *target, BattleSystem *battle)
     }
     else
     {
-        //battle->addBattleLog(QString("%1 的 %2 未能命中!").arg(user->getName()).arg(m_name));
+        // battle->addBattleLog(QString("%1 的 %2 未能命中!").arg(user->getName()).arg(m_name));
         return false;
     }
 }

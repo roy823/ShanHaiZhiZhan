@@ -232,6 +232,9 @@ bool StatusSkill::use(Creature *user, Creature *target, BattleSystem *battle)
     if (!user || !battle) return false;
     // 状态技能通常对自己或对方使用，目标可能需要判断
     Creature* actualTarget = target; // 默认目标是传入的target
+    // 许多状态技能可能以自身为目标，或需要根据效果判断目标
+    // 例如: 硬化 -> target=user; 催眠粉 -> target=opponent
+
     if (checkHit(user, actualTarget, battle)) // 状态技能也需要命中判定
     {
         // battle->addBattleLog(QString("%1 使用了 %2!").arg(user->getName()).arg(m_name));
@@ -246,7 +249,7 @@ bool StatusSkill::use(Creature *user, Creature *target, BattleSystem *battle)
     }
     else
     {
-        //battle->addBattleLog(QString("%1 的 %2 未能命中!").arg(user->getName()).arg(m_name));
+        // battle->addBattleLog(QString("%1 的 %2 未能命中!").arg(user->getName()).arg(m_name));
         return false;
     }
 }
