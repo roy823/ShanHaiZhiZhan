@@ -114,7 +114,8 @@ private:
     //回合流程控制
     bool m_playerActionSubmittedThisTurn;
     bool m_opponentActionSubmittedThisTurn;
-
+    
+    //处理回合
     void queuePlayerAction(BattleAction action, int param1 = -1, int param2 = -1);
     void queueOpponentAction(BattleAction action, int param1 = -1, int param2 = -1);
     void sortActionQueue();
