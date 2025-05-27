@@ -81,6 +81,8 @@ public:
     QString getStatusConditionName(StatusCondition condition) const;
     QString getStatTypeName(StatType stat) const;
     
+    // 战斗结束恢复战斗前的精灵状态
+    void restoreCreaturesAfterBattle();
 
 
 public slots:

@@ -252,7 +252,7 @@ void BattleSystem::processTurnExecutePhase() {
 }
 
 bool BattleSystem::checkBattleEnd() {
-    // 如果战斗结果已经不是“进行中”，则直接返回true表示战斗已结束
+    // 如果战斗结果已经不是"进行中"，则直接返回true表示战斗已结束
     if (m_battleResult != BattleResult::ONGOING) return true;
 
     // 检查玩家队伍是否全部濒死
@@ -287,6 +287,10 @@ bool BattleSystem::checkBattleEnd() {
     // 如果战斗结果从"进行中"变为其他状态，则更新m_battleResult并发出信号
     if (newResultState != BattleResult::ONGOING) {
         m_battleResult = newResultState;
+        
+        // 在战斗结束前恢复所有精灵的状态
+        restoreCreaturesAfterBattle();
+        
         emit battleEnded(m_battleResult);
         return true;
     }
@@ -609,6 +613,10 @@ void BattleSystem::executeActionQueue() {
                     if (QRandomGenerator::global()->bounded(100) < 75) { 
                         m_battleResult = BattleResult::ESCAPE;
                         addBattleLog("成功逃脱!");
+                        
+                        // 添加这行：在逃跑成功时也恢复所有精灵的状态
+                        restoreCreaturesAfterBattle();
+                        
                         emit battleEnded(m_battleResult); // 逃跑成功，战斗立即结束
                         return; // 停止处理后续行动
                     } else {
@@ -803,4 +811,37 @@ QString BattleSystem::getStatusConditionName(StatusCondition condition) const {
         case StatusCondition::NONE:      return "正常";
         default:                         return "未知状态";
     }
+}
+
+void BattleSystem::restoreCreaturesAfterBattle()
+{
+    // 恢复玩家队伍中所有精灵
+    for (Creature* creature : m_playerTeam) {
+        if (creature) {
+            // 恢复满血
+            creature->heal(creature->getMaxHP());
+            // 清除异常状态
+            creature->clearStatusCondition();
+            // 清除回合效果
+            creature->clearAllTurnEffects();
+            // 恢复满PP
+            creature->restorePP(creature->getMaxPP());
+            // 重置能力等级
+            creature->resetStatStages();
+        }
+    }
+
+    // 恢复对手队伍中所有精灵
+    for (Creature* creature : m_opponentTeam) {
+        if (creature) {
+            creature->heal(creature->getMaxHP());
+            creature->clearStatusCondition();
+            creature->clearAllTurnEffects();
+            creature->restorePP(creature->getMaxPP());
+            creature->resetStatStages();
+        }
+    }
+
+    // 记录恢复日志
+    addBattleLog("所有精灵的状态已恢复。");
 }
