@@ -747,8 +747,6 @@ TungTungTung::TungTungTung(int level)
 
     // 第五技能: 不屈战魂
     setFifthSkill(new IndomitableSpiritSkill());
-
-    // HP低于1/2的条件检查在FifthSkill::canUse中或BattleSystem中处理
 }
 
 // 木棍人特殊回合开始逻辑 (如果需要)
@@ -825,20 +823,32 @@ LiriliLarila::LiriliLarila(int level)
 
     // 寄生种子
     StatusSkill *leechSeed = new StatusSkill("寄生种子", ElementType::GRASS, 2, 90);
-    auto leechSeedLambda = [](Creature *source, Creature *target, BattleSystem *battle_unused, TurnBasedEffect *self_effect_unused)
+    auto leechSeedLambda = [](Creature *source, Creature *affected, BattleSystem *battle, TurnBasedEffect *effect)
     {
-        if (source && target && !target->isDead())
-        { // 确保目标存活
-            int leechAmount = target->getMaxHP() / 8;
-            target->takeDamage(leechAmount);
+        if (!source || !affected || affected->isDead())
+            return;
+
+        int leechAmount = affected->getMaxHP() / 8;
+        affected->takeDamage(leechAmount);
+        
+        // 使用battle系统的触发器记录伤害
+        if (battle) {
+            battle->triggerDamageCaused(affected, leechAmount);
+        }
+        
+        // 只有当原始施法者(source)还存活时才尝试治疗
+        if (!source->isDead()) {
             source->heal(leechAmount);
-            // battle_unused->addBattleLog(QString("%1 从 %2 身上吸取了HP!").arg(source->getName()).arg(target->getName()));
+            // 使用battle系统的触发器记录治疗
+            if (battle) {
+                battle->triggerHealingReceived(source, leechAmount);
+            }
         }
     };
-    TurnBasedEffect *leechEffect = new TurnBasedEffect(999, leechSeedLambda, false); // 持续999回合(代表直到交换)，回合结束触发
+    TurnBasedEffect *leechEffect = new TurnBasedEffect(999, leechSeedLambda, false); // 持续999回合(直到交换)，回合结束触发
     leechEffect->setDescription("寄生种子效果");
-    leechSeed->addEffect(leechEffect); // 这个效果是施加给对方的
-    leechSeed->getEffects().first()->setTargetSelf(false);
+    leechEffect->setTargetSelf(true);  
+    leechSeed->addEffect(leechEffect);
     learnSkill(leechSeed);
 
     // 沙尘尖刺 (Entry Hazard，需要在BattleSystem中特殊处理)
@@ -871,7 +881,7 @@ public:
     bool use(Creature *user, Creature *target_unused, BattleSystem *battle_unused) override
     {
         // 中文注释：使用狂化变身技能
-        // 调用基类的use进行PP消耗和基础判定 (虽然StatusSkill的use可能很简单)
+        // 调用基类的use进行PP消耗和基础判定
         if (!StatusSkill::use(user, target_unused, battle_unused))
             return false;
 

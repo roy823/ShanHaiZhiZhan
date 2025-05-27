@@ -74,13 +74,12 @@ public:
     void triggerStatStageChanged(Creature* target, StatType stat, int oldStage, int newStage);
     QString getStatTypeName(StatType stat) const;
 
-    
+
 public slots:
 
 signals:
     void battleStarted();
     void battleEnded(BattleResult result);
-    // isPlayerTurn 现在更多指示玩家的输入窗口开始
     void turnStarted(int turn, bool isPlayerTurn); 
     void turnEnded(int turn); // 表示一个完整回合（双方行动后）的结束
     void skillUsed(Creature *user, Creature *target, Skill *skill, bool hit, int damage);
@@ -90,8 +89,6 @@ signals:
     void statStageChanged(Creature *creature, StatType stat, int oldStage, int newStage);
     void creatureSwitched(Creature *oldCreature, Creature *newCreature, bool isPlayer);
     void battleLogUpdated(const QString &message);
-
-    // 新增信号，用于UI反馈
     void playerActionConfirmed();   // 玩家已提交本回合行动
     void opponentActionConfirmed(); // 对手/AI已提交本回合行动
 
@@ -104,7 +101,7 @@ private:
     int m_playerActiveIndex;
     int m_opponentActiveIndex;
 
-    struct ActionQueueItem { // 保持不变
+    struct ActionQueueItem {
         Creature *actor;
         BattleAction action;
         int param1; 
@@ -114,7 +111,7 @@ private:
     QVector<ActionQueueItem> m_actionQueue;
     QVector<BattleLogEntry> m_battleLog;
 
-    // 新增状态标志，用于回合流程控制
+    //回合流程控制
     bool m_playerActionSubmittedThisTurn;
     bool m_opponentActionSubmittedThisTurn;
 
@@ -126,7 +123,7 @@ private:
     void processTurnEndEffects();
     void addBattleLog(const QString &message, Creature *source = nullptr, Creature *target = nullptr);
 
-    // 精细化的回合处理方法
+    //回合处理方法
     void tryProcessTurnActions();     // 检查是否双方都已行动，如果是则开始结算
     void processTurnInputPhase();     // 设置进入行动输入阶段
     void processTurnExecutePhase();   // 执行已提交的行动并结束当前回合的结算

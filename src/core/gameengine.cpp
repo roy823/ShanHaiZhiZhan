@@ -345,7 +345,7 @@ void GameEngine::startPvEBattle()
 {
     // 创建AI对手队伍
     int difficulty = 1; // 可以根据玩家进度或其他因素调整难度
-    QVector<Creature *> aiTeam = createAITeam(difficulty);
+    QVector<Creature *> aiTeam = createAITeam(difficulty,1);
 
     // 启动战斗
     startBattle(aiTeam, false);

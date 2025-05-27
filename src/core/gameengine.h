@@ -85,7 +85,7 @@ public:
                       int power, int accuracy, int maxPP);
     
     // 创建精灵队伍（AI对手）
-    QVector<Creature*> createAITeam(int difficulty, int teamSize = 3);
+    QVector<Creature*> createAITeam(int difficulty, int teamSize = 1);
 
 public slots:
     // 接收战斗结果
