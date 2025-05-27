@@ -15,6 +15,38 @@ bool FifthSkill::canUse(Creature *user, Creature *target, BattleSystem* battle) 
     return user != nullptr; // 基础检查
 }
 
+bool FifthSkill::use(Creature *user, Creature *target, BattleSystem* battle)
+{
+    // 先检查是否可以使用此技能
+    if (!canUse(user, target, battle)) {
+        if (battle) {
+            battle->addBattleLog(QString("%1 无法使用 %2！条件不满足。").arg(user->getName()).arg(this->getName()));
+        }
+        return false;
+    }
+
+    // 确保目标正确(自身技能的目标应该是使用者)
+    Creature* actualTarget = target;
+    if (this->getCategory() == SkillCategory::STATUS && !actualTarget && !this->getEffects().isEmpty() && this->getEffects().first()->isTargetSelf()) {
+        actualTarget = user;
+    }
+
+    // 命中检查
+    if (this->checkHit(user, actualTarget, battle)) {
+        // 应用所有效果
+        for (Effect *effect : this->getEffects()) {
+            if (effect) {
+                Creature* effectTarget = effect->isTargetSelf() ? user : actualTarget;
+                if (effectTarget) {
+                    effect->apply(user, effectTarget, battle);
+                }
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
 int FifthSkill::getPower(const Creature* user, const Creature* target) const
 {
     return m_power; // 默认返回基础威力

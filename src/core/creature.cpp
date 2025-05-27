@@ -703,15 +703,6 @@ TungTungTung::TungTungTung(int level)
     StatusSkill *hardenWoodBody = new StatusSkill("硬化木身", ElementType::NORMAL, 3, 100); // 命中100表示对自己使用通常必中
     hardenWoodBody->addEffect(new StatChangeEffect(StatType::DEFENSE, 3, true));            // 提升自身物防+3
     hardenWoodBody->addEffect(new StatChangeEffect(StatType::SP_DEFENSE, 3, true));         // 提升自身特防+3
-    // 创建回合治疗效果的 lambda
-    auto healLambda = [](Creature *source, Creature *target_unused, BattleSystem *battle_unused, TurnBasedEffect *self_effect_unused)
-    {
-        if (source)
-        {
-            source->heal(source->getMaxHP() * 30 / 100); // 恢复30%最大生命值
-        }
-    };
-    hardenWoodBody->addEffect(new TurnBasedEffect(3, healLambda, false)); // 持续3回合，回合结束时触发
     learnSkill(hardenWoodBody);
 
     CompositeSkill *armorPierceThrust = new CompositeSkill("破甲直刺", ElementType::NORMAL, SkillCategory::PHYSICAL, 70, 3, 100);

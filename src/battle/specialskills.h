@@ -17,6 +17,9 @@ public:
     
     // 检查是否应该强制暴击（可被子类重写）
     virtual bool shouldForceCriticalHit(const Creature* user, const Creature* target) const;
+
+    // 覆盖基类使用第五技能！
+    virtual bool use(Creature *user, Creature *target, BattleSystem* battle) override;
 };
 
 // 绝影刺杀技能类

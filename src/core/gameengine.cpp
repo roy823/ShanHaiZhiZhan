@@ -353,7 +353,6 @@ void GameEngine::startPvEBattle()
 
 void GameEngine::startPvPBattle()
 {
-    // TODO: 实现PvP对战逻辑
     // 目前简单实现，使用AI作为对手
     QVector<Creature *> aiTeam = createAITeam(2, 3);
 

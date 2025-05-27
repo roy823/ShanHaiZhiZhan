@@ -510,7 +510,7 @@ void BattleSystem::executeActionQueue() {
                 addBattleLog(QString("%1 使用了 %2!").arg(actor->getName()).arg(skillToUse->getName()));
                 actor->consumePP(skillToUse->getPPCost()); // 消耗PP
 
-                // Skill::use 现在主要负责命中判定和应用非伤害效果
+                // Skill::use 主要负责命中判定和应用非伤害效果
                 if (skillToUse->use(actor, target, this)) { 
                     // 对于物理或特殊攻击类技能，伤害计算和应用由BattleSystem处理
                     if (skillToUse->getCategory() == SkillCategory::PHYSICAL || skillToUse->getCategory() == SkillCategory::SPECIAL) {
