@@ -194,13 +194,13 @@ rcc/qrc_resources.cpp: ../src/resources/resources.qrc \
 		../src/resources/sounds/heal.wav \
 		../src/resources/sounds/victory.wav \
 		../src/resources/sprites/bombardinocrocodillo_back.png \
+		../src/resources/sprites/lirililarila_back.png \
 		../src/resources/sprites/tung_tung_tung_tung_sahur_back.png \
+		../src/resources/sprites/lirililarila_front.png \
 		../src/resources/sprites/cappuccinoassassino_front.png \
 		../src/resources/sprites/cappuccinoassassino_back.png \
 		../src/resources/sprites/tung_tung_tung_tung_sahur_front.png \
-		../src/resources/sprites/LiriliLarila_front.png \
-		../src/resources/sprites/bombardinocrocodillo_front.png \
-		../src/resources/sprites/LiriliLarila_back.png
+		../src/resources/sprites/bombardinocrocodillo_front.png
 	D:\Qt_creater\6.8.1\mingw_64\bin\rcc.exe -name resources --no-zstd ..\src\resources\resources.qrc -o rcc\qrc_resources.cpp
 
 compiler_moc_predefs_make_all: moc/moc_predefs.h
@@ -3144,7 +3144,12 @@ obj/specialskills.o: ../src/battle/specialskills.cpp ../src/battle/specialskills
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcoreevent.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qobject_impl.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbindingstorage.h
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbindingstorage.h \
+		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QObject \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\specialskills.o ..\src\battle\specialskills.cpp
 
 obj/effect.o: ../src/battle/effect.cpp ../src/battle/effect.h \

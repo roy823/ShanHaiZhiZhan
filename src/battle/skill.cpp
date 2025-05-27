@@ -80,7 +80,7 @@ bool Skill::use(Creature *user, Creature *target, BattleSystem *battle)
            if (effect) effect->apply(user, target, battle);
         }
         // 对于攻击型技能，实际伤害计算和应用由BattleSystem在执行队列时处理
-        // 这里返回true表示技能“成功发动”（命中并通过了PP检查）
+        // 这里返回true表示技能"成功发动"（命中并通过了PP检查）
         return true;
     }
     else
@@ -143,8 +143,7 @@ QString Skill::getDetailedDescription() const
     }
     
     // 如果有自定义描述，也添加上
-    if (!m_description.isEmpty()) {
-        description += "\n" + m_description;
+    if (!m_description.isEmpty()) {        description += "\n" + m_description;
     }
     
     return description;
@@ -210,16 +209,6 @@ PhysicalSkill::PhysicalSkill(const QString &name, ElementType type, int power,
     // 物理技能的特定初始化（如果需要）
 }
 
-// PhysicalSkill::calculateDamage现在依赖BattleSystem，基类实现已足够
-// int PhysicalSkill::calculateDamage(Creature *user, Creature *target)
-// {
-//     // 伤害计算会非常复杂，通常放在BattleSystem中处理
-//     // 这里仅返回技能威力作为基础，或一个简化的计算
-//     // 实际伤害 = ( ( (等级 * 2 / 5 + 2) * 威力 * 攻击 / 防御 ) / 50 + 2 ) * 属性相性 * STAB * 随机数 等
-//     return Skill::calculateDamage(user, target); // 调用基类实现，或进行特定物理伤害计算
-// }
-
-
 // --- SpecialSkill 实现 ---
 SpecialSkill::SpecialSkill(const QString &name, ElementType type, int power,
                            int ppCost, int accuracy, int priority)
@@ -227,13 +216,6 @@ SpecialSkill::SpecialSkill(const QString &name, ElementType type, int power,
 {
     // 特殊技能的特定初始化
 }
-
-// SpecialSkill::calculateDamage现在依赖BattleSystem
-// int SpecialSkill::calculateDamage(Creature *user, Creature *target)
-// {
-//     return Skill::calculateDamage(user, target); // 调用基类实现，或进行特定特殊伤害计算
-// }
-
 
 // --- StatusSkill 实现 ---
 StatusSkill::StatusSkill(const QString &name, ElementType type,
@@ -464,7 +446,8 @@ bool StatChangeSkill::use(Creature *user, Creature *target, BattleSystem *battle
                 // int oldStage = actualTarget->getStatStages().getStage(change.stat); // oldStage 未使用
                 actualTarget->modifyStatStage(change.stat, change.stages);
                 // int newStage = actualTarget->getStatStages().getStage(change.stat); // newStage 未使用
-                // BattleSystem 负责 emitStatStageChanged            }
+                // BattleSystem 负责 emitStatStageChanged            
+            }
         }
 
         for (Effect *effect : m_effects) { // 应用其他非能力改变的附加效果
@@ -476,22 +459,4 @@ bool StatChangeSkill::use(Creature *user, Creature *target, BattleSystem *battle
         return true;
     }
     return false; // 如果未命中，返回false
-}
-}
-
-// --- FifthSkill 实现 ---
-FifthSkill::FifthSkill(const QString &name, ElementType type, SkillCategory category,
-                       int power, int ppCost, int accuracy, int priority)
-    : Skill(name, type, category, power, ppCost, accuracy, priority)
-{
-    // 第五技能初始化
-}
-
-bool FifthSkill::canUse(Creature *user, Creature *target_unused, BattleSystem* battle_unused) const
-{
-    if (!user) return false;
-    if (m_name == "不屈战魂") {
-        return user->getCurrentHP() < (user->getMaxHP() / 2);
-    }
-    return true;
 }

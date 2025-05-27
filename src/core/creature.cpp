@@ -746,11 +746,8 @@ TungTungTung::TungTungTung(int level)
     learnSkill(armorPierceThrust);
 
     // 第五技能: 不屈战魂
-    FifthSkill *indomitableSpirit = new FifthSkill("不屈战魂", ElementType::NORMAL, SkillCategory::STATUS, 0, 3, 100);
-    indomitableSpirit->addEffect(new StatChangeEffect(StatType::ATTACK, 2, true));
-    indomitableSpirit->addEffect(new StatChangeEffect(StatType::SPEED, 1, true));
-    indomitableSpirit->addEffect(new HealingEffect(33, true)); // 恢复33%最大HP (true表示百分比)
-    setFifthSkill(indomitableSpirit);
+    setFifthSkill(new IndomitableSpiritSkill());
+
     // HP低于1/2的条件检查在FifthSkill::canUse中或BattleSystem中处理
 }
 
@@ -788,21 +785,7 @@ BombardinoCrocodillo::BombardinoCrocodillo(int level)
     learnSkill(new SpecialSkill("锁定导弹", ElementType::MACHINE, 80, 3, 101)); // 101命中视为必中
 
     // 第五技能: 空域压制
-    FifthSkill *airspaceSupremacy = new FifthSkill("空域压制", ElementType::FLYING, SkillCategory::STATUS, 0, 3, 100);
-    auto airspaceLambda = [](Creature *source_unused, Creature *target, BattleSystem *battle_unused, TurnBasedEffect *self_effect_unused)
-    {
-        if (target)
-        {
-            target->modifyStatStage(StatType::SPEED, -1);
-        }
-        // TODO: 己方全体飞行系和机械系精灵攻击技能威力提升20% (这个需要BattleSystem支持场地效果或临时buff)
-    };
-    // 这个效果应该施加给对方，持续3回合
-    TurnBasedEffect *debuffEffect = new TurnBasedEffect(3, airspaceLambda, true); // 回合开始时触发
-    debuffEffect->setTargetSelf(false);                                           // 作用于对方
-    debuffEffect->setDescription("空域压制：速度下降");
-    airspaceSupremacy->addEffect(debuffEffect);
-    setFifthSkill(airspaceSupremacy);
+    setFifthSkill(new AirspaceSupremacySkill());
 }
 void BombardinoCrocodillo::onTurnStart() { Creature::onTurnStart(); }
 void BombardinoCrocodillo::onTurnEnd() { Creature::onTurnEnd(); }
@@ -827,10 +810,7 @@ TralaleroTralala::TralaleroTralala(int level)
     learnSkill(opportunist);
 
     // 第五技能: 极速掠食
-    FifthSkill *blitzPredator = new FifthSkill("极速掠食", ElementType::WATER, SkillCategory::PHYSICAL, 100, 4, 95);
-    blitzPredator->addEffect(new StatChangeEffect(StatType::SPEED, 1, true));
-    // 若击败目标，则额外提升物攻等级+1 (这个需要在BattleSystem中，在伤害结算后检查目标是否濒死)
-    setFifthSkill(blitzPredator);
+    setFifthSkill(new LifeSiphonFieldSkill());
 }
 void TralaleroTralala::onTurnStart() { Creature::onTurnStart(); }
 void TralaleroTralala::onTurnEnd() { Creature::onTurnEnd(); }
@@ -875,32 +855,8 @@ LiriliLarila::LiriliLarila(int level)
     learnSkill(earthShaker);
 
     // 第五技能: 生命汲取领域
-    FifthSkill *lifeSiphonField = new FifthSkill("生命汲取领域", ElementType::GRASS, SkillCategory::STATUS, 0, 4, 100);
-    auto siphonLambda = [](Creature *source, Creature *target_active_opponent, BattleSystem *battle, TurnBasedEffect *self_effect_unused)
-    {
-        if (!battle || !source)
-            return;
-        // 对场上所有非草属性精灵造成伤害
-        // 这个需要BattleSystem提供获取场上所有精灵的方法，这里简化为只影响当前对手
-        Creature *opponent = battle->getOpponentActiveCreature() == source ? battle->getPlayerActiveCreature() : battle->getOpponentActiveCreature();
-        if (opponent && !opponent->isDead())
-        {
-            if (opponent->getType().getPrimaryType() != ElementType::GRASS &&
-                (opponent->getType().getSecondaryType() == ElementType::NONE || opponent->getType().getSecondaryType() != ElementType::GRASS))
-            {
-                opponent->takeDamage(opponent->getMaxHP() / 16);
-                // battle->addBattleLog(QString("%1 因生命汲取领域受到了伤害!").arg(opponent->getName()));
-            }
-        }
-        // 自身恢复
-        source->heal(source->getMaxHP() / 8);
-        // battle->addBattleLog(QString("%1 通过生命汲取领域恢复了HP!").arg(source->getName()));
-    };
-    TurnBasedEffect *siphonEffect = new TurnBasedEffect(3, siphonLambda, false); // 持续3回合，回合结束触发
-    siphonEffect->setDescription("生命汲取领域激活中");
-    lifeSiphonField->addEffect(siphonEffect); // 这个效果是施加给自身的场地类效果
-    lifeSiphonField->getEffects().first()->setTargetSelf(true);
-    setFifthSkill(lifeSiphonField);
+    setFifthSkill(new LifeSiphonFieldSkill());
+
 }
 void LiriliLarila::onTurnStart() { Creature::onTurnStart(); }
 void LiriliLarila::onTurnEnd() { Creature::onTurnEnd(); }
@@ -956,8 +912,7 @@ ChimpanziniBananini::ChimpanziniBananini(int level)
 
     learnSkill(new PrimalShiftSkill()); // 使用自定义的变身技能
 
-    FifthSkill *jungleKingStrike = new FifthSkill("丛林之王强击", ElementType::GRASS, SkillCategory::PHYSICAL, 130, 5, 90);
-    setFifthSkill(jungleKingStrike);
+    setFifthSkill(new JungleKingStrikeSkill());
 }
 // 狂暴形态相关方法
 void ChimpanziniBananini::enterBerserkForm(int duration)
@@ -1033,12 +988,7 @@ Luguanluguanlulushijiandaole::Luguanluguanlulushijiandaole(int level)
     learnSkill(timeHop);
 
     // 第五技能: 时间悖论 (极其复杂，简化或标记为TODO)
-    FifthSkill *temporalParadox = new FifthSkill("时间悖论", ElementType::NORMAL, SkillCategory::STATUS, 0, 5, 100);
-    // 记录当前场上双方精灵的HP、PP、能力等级、异常状态。
-    // 3回合后，若此精灵仍在场，则有50%几率将场上所有精灵（包括自身）的状态强制恢复到记录时的状态。
-    // 若发动失败，则自身陷入疲惫1回合。
-    // 这个技能的实现严重依赖BattleSystem的状态快照和恢复机制。
-    setFifthSkill(temporalParadox);
+    setFifthSkill(new TemporalParadoxSkill());
 }
 
 void Luguanluguanlulushijiandaole::recordBattleState() { /* TODO */ }

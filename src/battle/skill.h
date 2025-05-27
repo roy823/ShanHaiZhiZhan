@@ -224,15 +224,4 @@ private:
     QVector<StatChange> m_statChanges; // 该技能包含的所有能力变化效果
 };
 
-
-// 第五技能基类 (可能有特殊的使用条件或效果)
-class FifthSkill : public Skill
-{
-public:
-    FifthSkill(const QString &name, ElementType type, SkillCategory category, // ElementType is correctly used here as a type
-               int power, int ppCost, int accuracy, int priority = 0);
-
-    virtual bool canUse(Creature *user, Creature *target, BattleSystem* battle) const;
-};
-
 #endif // SKILL_H
