@@ -1,0 +1,86 @@
+cmake_minimum_required(VERSION 3.16)
+project(ShanHaiZhiZhan VERSION 1.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
+if (NOT Qt6_FOUND)
+    find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+endif()
+
+# 包含头文件目录
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models/creature
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models/creature/concreteCreatures
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models/skill
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models/skill/concreteSkills
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models/attribute
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models/effect
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models/effect/concreteEffects
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models/status
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models/status/concreteStatus
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models/player
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/resources
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils
+)
+
+# 源文件
+file(GLOB_RECURSE SOURCES
+    "src/*.cpp"
+    "src/core/*.cpp"
+    "src/models/*.cpp"
+    "src/models/creature/*.cpp"
+    "src/models/creature/concreteCreatures/*.cpp"
+    "src/models/skill/*.cpp"
+    "src/models/skill/concreteSkills/*.cpp"
+    "src/models/attribute/*.cpp"
+    "src/models/effect/*.cpp"
+    "src/models/effect/concreteEffects/*.cpp"
+    "src/models/status/*.cpp"
+    "src/models/status/concreteStatus/*.cpp"
+    "src/models/player/*.cpp"
+    "src/ui/*.cpp"
+    "src/utils/*.cpp"
+)
+
+# 头文件
+file(GLOB_RECURSE HEADERS
+    "src/*.h"
+    "src/core/*.h"
+    "src/models/*.h"
+    "src/models/creature/*.h"
+    "src/models/creature/concreteCreatures/*.h"
+    "src/models/skill/*.h"
+    "src/models/skill/concreteSkills/*.h"
+    "src/models/attribute/*.h"
+    "src/models/effect/*.h"
+    "src/models/effect/concreteEffects/*.h"
+    "src/models/status/*.h"
+    "src/models/status/concreteStatus/*.h"
+    "src/models/player/*.h"
+    "src/ui/*.h"
+    "src/utils/*.h"
+)
+
+# 资源文件
+set(RESOURCES
+    resources/resources.qrc
+)
+
+# 创建可执行文件
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${RESOURCES})
+
+# 链接Qt库
+if (Qt6_FOUND)
+    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)
+else()
+    target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets)
+endif()
