@@ -801,7 +801,7 @@ LiriliLarila::LiriliLarila(int level)
 
     // 寄生种子
     StatusSkill *leechSeed = new StatusSkill("寄生种子", ElementType::GRASS, 2, 90);
-    auto leechSeedLambda = [](Creature *source, Creature *affected, BattleSystem *battle, TurnBasedEffect *effect)
+    auto leechSeedLambda = [](Creature *affected, Creature *source, BattleSystem *battle, TurnBasedEffect *effect)
     {
         if (!source || !affected || affected->isDead())
             return;
@@ -823,9 +823,10 @@ LiriliLarila::LiriliLarila(int level)
             }
         }
     };
-    TurnBasedEffect *leechEffect = new TurnBasedEffect(999, leechSeedLambda, false); // 持续999回合(直到交换)，回合结束触发
+    TurnBasedEffect *leechEffect = new TurnBasedEffect(999, leechSeedLambda, false);
     leechEffect->setDescription("寄生种子效果");
-    leechEffect->setTargetSelf(true);  
+    leechEffect->setTargetSelf(false);  // 效果应该作用于对手
+    leechEffect->setOriginalSource(nullptr);  // 在apply时自动设置
     leechSeed->addEffect(leechEffect);
     learnSkill(leechSeed);
 
