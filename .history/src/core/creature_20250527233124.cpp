@@ -817,17 +817,16 @@ LiriliLarila::LiriliLarila(int level)
             battle->triggerDamageCaused(affected, leechAmount);
         }
 
-        // 再次检查战斗状态
-        if (battle->getBattleResult() != BattleResult::ONGOING)
-            return;
+        if (affected->isDead() || battle->getBattleResult() != BattleResult::ONGOING)
+        return;
 
-        // 只有当源生物存活时才尝试治疗
+        // 只有当原始施法者(source)还存活时才尝试治疗
         if (!source->isDead()) {
             source->heal(leechAmount);
-            // 再次检查战斗状态
-            if (battle->getBattleResult() != BattleResult::ONGOING)
-                return;
-            battle->triggerHealingReceived(source, leechAmount);
+            // 使用battle系统的触发器记录治疗
+            if (battle) {
+                battle->triggerHealingReceived(source, leechAmount);
+            }
         }
     };
     TurnBasedEffect *leechEffect = new TurnBasedEffect(999, leechSeedLambda, false);

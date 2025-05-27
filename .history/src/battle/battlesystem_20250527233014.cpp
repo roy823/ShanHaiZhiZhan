@@ -656,21 +656,12 @@ void BattleSystem::executeActionQueue() {
 }
 
 void BattleSystem::processTurnStartEffects() {
-    if (m_battleResult != BattleResult::ONGOING) return;
-    
-    addBattleLog("回合结束效果结算...");
+    addBattleLog("回合开始效果结算...");
     Creature* playerC = getPlayerActiveCreature();
     Creature* opponentC = getOpponentActiveCreature();
-    
-    if (playerC && !playerC->isDead()) {
-        playerC->onTurnEnd(this);
-        // 每次效果处理后检查战斗状态
-        if (m_battleResult != BattleResult::ONGOING) return;
-    }
-    
-    if (opponentC && !opponentC->isDead()) {
-        opponentC->onTurnEnd(this);
-    }
+    // 确保精灵存在且未濒死才执行其回合开始效果
+    if (playerC && !playerC->isDead()) playerC->onTurnStart(this);
+    if (opponentC && !opponentC->isDead()) opponentC->onTurnStart(this);
 }
 
 void BattleSystem::processTurnEndEffects() {

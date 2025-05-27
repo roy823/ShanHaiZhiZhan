@@ -286,32 +286,11 @@ bool BattleSystem::checkBattleEnd() {
     
     // 如果战斗结果从"进行中"变为其他状态，则更新m_battleResult并发出信号
     if (newResultState != BattleResult::ONGOING) {
-        // 先标记战斗结束状态，这样其他过程中的检查可以知道战斗已结束
         m_battleResult = newResultState;
         
-        addBattleLog("战斗结束，正在清理状态效果...");
-        
-        // 先清理所有回合效果，防止它们在战斗结束后继续执行
-        for (Creature *creature : m_playerTeam) {
-            if (creature) {
-                creature->clearAllTurnEffects();
-            }
-        }
-        
-        for (Creature *creature : m_opponentTeam) {
-            if (creature) {
-                creature->clearAllTurnEffects();
-            }
-        }
-        
-        // 确保所有队列和挂起的动作都被清空
-        m_actionQueue.clear();
-        
-        addBattleLog("恢复所有精灵状态...");
         // 在战斗结束前恢复所有精灵的状态
         restoreCreaturesAfterBattle();
         
-        // 最后发送战斗结束信号
         emit battleEnded(m_battleResult);
         return true;
     }
@@ -656,21 +635,12 @@ void BattleSystem::executeActionQueue() {
 }
 
 void BattleSystem::processTurnStartEffects() {
-    if (m_battleResult != BattleResult::ONGOING) return;
-    
-    addBattleLog("回合结束效果结算...");
+    addBattleLog("回合开始效果结算...");
     Creature* playerC = getPlayerActiveCreature();
     Creature* opponentC = getOpponentActiveCreature();
-    
-    if (playerC && !playerC->isDead()) {
-        playerC->onTurnEnd(this);
-        // 每次效果处理后检查战斗状态
-        if (m_battleResult != BattleResult::ONGOING) return;
-    }
-    
-    if (opponentC && !opponentC->isDead()) {
-        opponentC->onTurnEnd(this);
-    }
+    // 确保精灵存在且未濒死才执行其回合开始效果
+    if (playerC && !playerC->isDead()) playerC->onTurnStart(this);
+    if (opponentC && !opponentC->isDead()) opponentC->onTurnStart(this);
 }
 
 void BattleSystem::processTurnEndEffects() {

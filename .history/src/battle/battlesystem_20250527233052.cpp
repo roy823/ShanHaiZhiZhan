@@ -656,7 +656,7 @@ void BattleSystem::executeActionQueue() {
 }
 
 void BattleSystem::processTurnStartEffects() {
-    if (m_battleResult != BattleResult::ONGOING) return;
+        if (m_battleResult != BattleResult::ONGOING) return;
     
     addBattleLog("回合结束效果结算...");
     Creature* playerC = getPlayerActiveCreature();
