@@ -49,7 +49,31 @@ GameEngine *SaveSystem::getGameEngine() const
 
 bool SaveSystem::saveGame(const QString &saveName)
 {
+    if (saveName.isEmpty()) {
+        qWarning() << "保存失败：存档名称为空";
+        return false;
+    }
+
     GameEngine *gameEngine = getGameEngine();
+    if (!gameEngine) {
+        qWarning() << "保存失败：无法获取游戏引擎实例";
+        return false;
+    }
+
+    // 打印存档路径（调试）
+    QString savePath = getSavePath(saveName);
+    qDebug() << "正在尝试保存游戏到:" << savePath;
+
+    // 确保存档目录存在
+    QDir saveDir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/saves");
+    if (!saveDir.exists()) {
+        bool dirCreated = saveDir.mkpath(".");
+        qDebug() << "创建存档目录:" << saveDir.path() << (dirCreated ? "成功" : "失败");
+        if (!dirCreated) {
+            qWarning() << "无法创建存档目录";
+            return false;
+        }
+    }
 
     // 创建主JSON对象
     QJsonObject saveObject;
@@ -62,18 +86,20 @@ bool SaveSystem::saveGame(const QString &saveName)
     // 保存玩家队伍
     QJsonArray playerTeamArray;
     const QVector<Creature *> &playerTeam = gameEngine->getPlayerTeam();
-    for (const Creature *creature : playerTeam)
-    {
-        playerTeamArray.append(creatureToJson(creature));
+    for (const Creature *creature : playerTeam) {
+        if (creature) {
+            playerTeamArray.append(creatureToJson(creature));
+        }
     }
     saveObject["playerTeam"] = playerTeamArray;
 
     // 保存可用精灵
     QJsonArray availableCreaturesArray;
     const QVector<Creature *> &availableCreatures = gameEngine->getAvailableCreatures();
-    for (const Creature *creature : availableCreatures)
-    {
-        availableCreaturesArray.append(creatureToJson(creature));
+    for (const Creature *creature : availableCreatures) {
+        if (creature) {
+            availableCreaturesArray.append(creatureToJson(creature));
+        }
     }
     saveObject["availableCreatures"] = availableCreaturesArray;
 
@@ -84,15 +110,23 @@ bool SaveSystem::saveGame(const QString &saveName)
     saveObject["progress"] = progressObject;
 
     // 将JSON写入文件
-    QFile saveFile(getSavePath(saveName));
-    if (!saveFile.open(QIODevice::WriteOnly))
-    {
+    QFile saveFile(savePath);
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+        qWarning() << "无法打开文件进行写入:" << savePath << "错误:" << saveFile.errorString();
         return false;
     }
 
-    saveFile.write(QJsonDocument(saveObject).toJson());
+    // 写入JSON数据
+    QByteArray jsonData = QJsonDocument(saveObject).toJson();
+    qint64 bytesWritten = saveFile.write(jsonData);
     saveFile.close();
 
+    if (bytesWritten <= 0) {
+        qWarning() << "写入存档文件失败，未写入任何数据";
+        return false;
+    }
+
+    qDebug() << "游戏成功保存到:" << savePath << "大小:" << bytesWritten << "字节";
     return true;
 }
 
@@ -376,4 +410,43 @@ Creature *SaveSystem::createCreatureFromJson(const QJsonObject &json) const
     }
 
     return creature;
+}
+
+void SaveSystem::checkSaveDirectory()
+{
+    QString dirPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/saves";
+    QDir dir(dirPath);
+    
+    qDebug() << "============= 存档目录信息 =============";
+    qDebug() << "路径:" << dirPath;
+    qDebug() << "存在:" << dir.exists();
+    
+    // 如果目录不存在，尝试创建
+    if (!dir.exists()) {
+        bool created = dir.mkpath(".");
+        qDebug() << "创建结果:" << (created ? "成功" : "失败");
+    }
+    
+    // 检查可访问性
+    QFileInfo dirInfo(dirPath);
+    qDebug() << "可读:" << dirInfo.isReadable();
+    qDebug() << "可写:" << dirInfo.isWritable();
+    
+    // 尝试写入测试文件
+    QString testFilePath = dirPath + "/test_write.tmp";
+    QFile testFile(testFilePath);
+    bool canOpen = testFile.open(QIODevice::WriteOnly);
+    qDebug() << "测试文件可创建:" << canOpen;
+    
+    if (canOpen) {
+        qint64 bytesWritten = testFile.write("测试内容");
+        testFile.close();
+        qDebug() << "测试文件写入:" << (bytesWritten > 0 ? "成功" : "失败") << "(" << bytesWritten << "字节)";
+        
+        // 尝试删除测试文件
+        bool removed = QFile::remove(testFilePath);
+        qDebug() << "测试文件删除:" << (removed ? "成功" : "失败");
+    }
+    
+    qDebug() << "========================================";
 }

@@ -101,6 +101,8 @@ void MainWindow::setupMainMenu() {
 
     // 为主菜单Widget设置布局
     m_mainMenuWidget->setLayout(layout);
+
+    SaveSystem::getInstance()->checkSaveDirectory();
 }
 
 void MainWindow::setupScenes() {

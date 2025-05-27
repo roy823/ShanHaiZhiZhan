@@ -21,6 +21,9 @@ public:
     // 获取用户输入的存档名称
     QString getSaveName() const;
 
+protected:
+    bool event(QEvent *event) override;
+
 private slots:
     // 按钮点击的槽函数
     void onSaveClicked();   // "保存"按钮点击

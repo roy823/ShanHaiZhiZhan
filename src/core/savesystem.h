@@ -25,6 +25,8 @@ public:
     
     // 删除存档
     bool deleteSave(const QString& saveName);
+
+    void checkSaveDirectory();
     
 private:
     SaveSystem();
