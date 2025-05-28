@@ -171,9 +171,6 @@ rcc/qrc_resources.cpp: ../src/resources/resources.qrc \
 		../src/resources/images/background/battle_bg.jpg \
 		../src/resources/images/background/main_menu_bg.jpg \
 		../src/resources/images/background/preparation_bg.jpg \
-		../src/resources/images/creatures/TralaleroTralala.png \
-		../src/resources/images/creatures/ChimpanziniBananini.png \
-		../src/resources/images/creatures/Luguanluguanlulushijiandaole.png \
 		../src/resources/images/skills/physical.png \
 		../src/resources/images/skills/special.png \
 		../src/resources/images/skills/status.png \
@@ -196,11 +193,17 @@ rcc/qrc_resources.cpp: ../src/resources/resources.qrc \
 		../src/resources/sprites/bombardinocrocodillo_back.png \
 		../src/resources/sprites/lirililarila_back.png \
 		../src/resources/sprites/tung_tung_tung_tung_sahur_back.png \
+		../src/resources/sprites/tralalerotralala_front.png \
 		../src/resources/sprites/lirililarila_front.png \
 		../src/resources/sprites/cappuccinoassassino_front.png \
 		../src/resources/sprites/cappuccinoassassino_back.png \
+		../src/resources/sprites/luguanluguanlulushijiandaole_back.png \
 		../src/resources/sprites/tung_tung_tung_tung_sahur_front.png \
-		../src/resources/sprites/bombardinocrocodillo_front.png
+		../src/resources/sprites/bombardinocrocodillo_front.png \
+		../src/resources/sprites/luguanluguanlulushijiandaole_front.png \
+		../src/resources/sprites/chimpanzinibananini_back.png \
+		../src/resources/sprites/tralalerotralala_back.png \
+		../src/resources/sprites/chimpanzinibananini_front.png
 	D:\Qt_creater\6.8.1\mingw_64\bin\rcc.exe -name resources --no-zstd ..\src\resources\resources.qrc -o rcc\qrc_resources.cpp
 
 compiler_moc_predefs_make_all: moc/moc_predefs.h
@@ -4553,7 +4556,41 @@ obj/savegamedialog.o: ../src/ui/savegamedialog.cpp ../src/ui/savegamedialog.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/QRegularExpressionValidator \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtGui/qvalidator.h \
 		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qregularexpression.h \
-		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QRegularExpression
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QRegularExpression \
+		../src/core/savesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QString \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVector \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qvector.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QJsonObject \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qjsonobject.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qjsonvalue.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcborvalue.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcborcommon.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qdatetime.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qcalendar.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/quuid.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QJsonArray \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qjsonarray.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QFile \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfile.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qfiledevice.h \
+		../src/core/creature.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QMap \
+		../src/core/type.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QPair \
+		../src/core/ability.h \
+		../src/battle/skill.h \
+		../src/battle/effect.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QVariant \
+		../src/core/gameengine.h \
+		../src/battle/battlesystem.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QTimer \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QEvent \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtCore/QDebug \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/QApplication \
+		../../../../Qt_creater/6.8.1/mingw_64/include/QtWidgets/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\savegamedialog.o ..\src\ui\savegamedialog.cpp
 
 obj/qrc_resources.o: rcc/qrc_resources.cpp 

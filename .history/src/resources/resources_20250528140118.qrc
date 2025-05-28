@@ -1,0 +1,47 @@
+<RCC>
+    <qresource prefix="/">
+        <!-- 图像资源 -->
+        <file>images/background/main_menu_bg.jpg</file>
+        <file>images/background/battle_bg.jpg</file>
+        <file>images/background/preparation_bg.jpg</file>
+        
+        <!-- 精灵图像 -->
+        <file>sprites/tung_tung_tung_tung_sahur_front.png</file>
+        <file>sprites/tung_tung_tung_tung_sahur_back.png</file>
+        <file>sprites/bombardinocrocodillo_front.png</file>
+        <file>sprites/bombardinocrocodillo_back.png</file>
+        <file>sprites/tralalerotralala_back.png</file>
+        <file>sprites/tralalerotralala_front.png</file>
+        <file>sprites/lirililarila_front.png</file>
+        <file>sprites/lirililarila_back.png</file>
+        <file>sprites/ChimpanziniBananini.png</file>
+        <file>images/creatures/Luguanluguanlulushijiandaole.png</file>
+        <file>sprites/cappuccinoassassino_front.png</file>
+        <file>sprites/cappuccinoassassino_back.png</file>
+        
+        <!-- 技能图标 -->
+        <file>images/skills/physical.png</file>
+        <file>images/skills/special.png</file>
+        <file>images/skills/status.png</file>
+        
+        <!-- 属性图标 -->
+        <file>images/types/fire.png</file>
+        <file>images/types/water.png</file>
+        <file>images/types/grass.png</file>
+        <file>images/types/ground.png</file>
+        <file>images/types/flying.png</file>
+        <file>images/types/bug.png</file>
+        <file>images/types/machine.png</file>
+        <file>images/types/normal.png</file>
+        <file>images/types/light.png</file>
+        <file>images/types/shadow.png</file>
+        
+        <!-- 音频资源 -->
+        <file>sounds/menu_music.mp3</file>
+        <file>sounds/battle_music.mp3</file>
+        <file>sounds/victory.wav</file>
+        <file>sounds/defeat.wav</file>
+        <file>sounds/attack.wav</file>
+        <file>sounds/heal.wav</file>
+    </qresource>
+</RCC>
